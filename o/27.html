@@ -1,0 +1,64 @@
+<!doctype html>
+<html><head><link rel="stylesheet" href="../page.css"><title>8. Контейнер set STL</title></head><body><h1>8. Контейнер set STL</h1>
+<div class="page_content_main">
+<p>Множество&nbsp;— это структура данных, эквивалентная множествам в математике. Множество состоит из различных элементов заданного типа и поддерживает операции добавления элемента в множество, удаления элемента из множества, проверка принадлежности элемента множеству. Одно и то же значение хранится в множестве только один раз. Для представления множеств в библиотеке STL имеется контейнер <code></code><span class="page_code_style"><code>set</code></span>, который реализован при помощи сбалансированного двоичного дерева поиска (красно-черного дерева), поэтому множества в STL хранятся в виде упорядоченной структуры, что позволяет перебирать элементы множества в порядке возрастания их значений. Для использования контейнера <code></code><span class="page_code_style"><code>set</code></span> нужно подключить заголовочный файл <code><span class="page_code_style">&lt;set&gt;</span></code>. Подробней о возможностях контейнера <code></code><span class="page_code_style"><code>set</code></span> можно прочитать, например, на сайте <a href="http://en.cppreference.com/w/cpp/container/set">cppreference.com</a>. В простейшем случае множество, например, данных типа <code></code><span class="page_code_style"><code>int</code></span> объявляется так:</p>
+<div class="page_code_style">
+<p>set &lt;int&gt; S;</p>
+</div>
+<p>Для добавления элемента в множество используется метод <code></code><span class="page_code_style"><code>insert</code></span>:</p>
+<div class="page_code_style">
+<p>S.insert(x);</p>
+</div>
+<p>Для проверки принадлежности элемента множеству используется метод <code></code><span class="page_code_style"><code>count</code></span>. Этот метод возвращает количество вхождения передаваемого параметра в данный контейнер, но поскольку в множестве все элементы уникальные, то <code></code><span class="page_code_style"><code>count</code></span> для типа <code></code><span class="page_code_style"><code>set</code></span> всегда возвращает 0 или 1. То есть для проверки принадлежности значения <code>x</code> множеству <code>S</code> можно использовать следующий код:</p>
+<div class="page_code_style">
+<p>if (S.count(x)) { …</p>
+</div>
+<p>Для удаления элемента используется метод <code></code><span class="page_code_style"><code>erase</code></span>. Ему можно передать значение элемента, итератор, указывающий на элемент или два итератора (в этом случае удаляется целый интервал элементов, содержащийся между заданными итераторами). Вот два способа удалить элемент <code>x</code>:</p>
+<div class="page_code_style">
+<p>S.erase(x); S.erase(S.find(x));</p>
+</div>
+<p>Метод <code><span class="page_code_style">size()</span></code> возвращает количество элементов в множестве, метод <code><span class="page_code_style">empty()</span></code>, возвращает логическое значение, равное <code></code><span class="page_code_style"><code>true</code></span>, если в множестве нет элементов, метод <code></code><span class="page_code_style"><code>clear()</code></span> удаляет все элементы из множества.</p><h2>Итераторы</h2>
+<p>С итераторами контейнера <span class="page_code_style"> <code>set</code></span> можно выполнять операции инкремента (что означает переход к следующему элементу) и декремента (переход к предыдущему элементу). Итераторы можно сравнивать на равенство и неравенство. Операции сравнения итераторов при помощи "&lt;", "&lt;=", "&gt;", "&gt;=" невозможны, также невозможно использовать операции прибавления к итератору числа.</p>
+<p>Разыменование итератора (применение унарного оператора <code>*</code>) возвращает значение элемента множества, на который указывает итератор.</p>
+<p>У множества есть метод <code><span class="page_code_style">begin()</span></code>, который возвращает итератор на первый элемент множества, и метод <code>e</code><span class="page_code_style"><code>nd()</code></span>, который возвращает фиктивный итератор на элемет, следующий за последним элементом в множестве. Таким образом, вывести все элементы множества можно так:</p>
+<div class="page_code_style">
+<p>set &lt;int&gt; S;</p>
+<p>set &lt;int&gt;::iterator it;</p>
+<p>for (it = S.begin(); it != S.end(); ++it)</p>
+<p>&nbsp;&nbsp;&nbsp; cout &lt;&lt; *it &lt;&lt; " "</p>
+</div>
+<p>Благодаря тому, что множества хранятся в упорядоченном виде, все элементы будут выведены в порядке возрастания значений.</p>
+<p>В стандарте C++11 разрешается перебор всех элементом множества при помощи range-based цикла:</p>
+<div class="page_code_style">
+<p>for (auto elem: S)</p>
+<p>&nbsp;&nbsp;&nbsp; cout &lt;&lt; elem &lt;&lt; " ";</p>
+</div>
+<p>Элементы также будут выведены в порядке возрастания.</p>
+<p>Для вывода элементов в порядке убывания можно использовать reverse_iterator аналогично векторам:</p>
+<div class="page_code_style">
+<p>for (auto it = S.rbegin(); it != S.rend(); ++it)</p>
+<p>&nbsp;&nbsp;&nbsp; cout &lt;&lt; *it &lt;&lt; " ";</p>
+</div>
+<p>Функции удаления элементов могут принимать итератор в качестве параметра. В этом случае удаляется элемент, на который указывает итератор. Например, чтобы удалить наименьший элемент:</p>
+<div class="page_code_style">
+<p>S.erase(S.begin());</p>
+</div>
+<p>Но для удаления последнего (наибольшего) элемента в set нельзя использовать reverse_iterator, нужно взять обычный итератор, указывающий на end(), уменьшить и удалить:</p>
+<div class="page_code_style">
+<p>auto it = S.begin();</p>
+<p>--it;</p>
+<p>S.erase(it);</p>
+</div><h2>Поиск элемента в set</h2>
+<p>Для поиска конкретного элемента в <span class="page_code_style">set</span> используется метод <code></code><span class="page_code_style"><code>find</code></span>. Этот метод возвращает <em>итератор</em> на элемент, а если элемент не найден, то он возвращает итератор <code><span class="page_code_style">end()</span></code> (т.е. на фиктивный элемент, следующий за последним элементом множества. Используя этот метод проверить принадлежность элемента множеству можно так:</p>
+<div class="page_code_style">
+<p>if (S.find(x) != S.end()) { …</p>
+</div>
+<p>Также есть методы <span class="page_code_style">lower_bound</span> и <span class="page_code_style">upper_bound</span>, которые находят первых элемент, больше или равный x и первый элемент, строго больший x (аналогично двоичному поиску элемента в массиве).</p>
+<p>Эти методы также возвращают итераторы, а если таких элементов (больше или равных или строго больших) нет в множестве, они возвращают <span class="page_code_style">end()</span>.</p>
+<p>Например, удалить из <span class="page_code_style">set</span> минимальный элемент, строго больший x можно так:</p>
+<div class="page_code_style">
+<p>auto it = S.upper_bound(x);</p>
+<p>if (it != S.end())</p>
+<p>&nbsp;&nbsp;&nbsp; S.erase(it);</p>
+</div></div><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script></body></html>

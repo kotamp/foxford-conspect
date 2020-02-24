@@ -1,0 +1,114 @@
+<!doctype html>
+<html><head><link rel="stylesheet" href="../page.css"><title>6. Понятие контейнера и итератора в STL</title></head><body><h1>6. Понятие контейнера и итератора в STL</h1>
+<div class="page_content_main"><h2>Понятие Контейнера и итератора</h2>
+<p>Контейнер — это класс STL, реализующий функциональность некоторой структуры данных, то есть хранилища нескольких элементов. Примеры разных контейнеров: vector, stack, queue, deque, string, set, map и т.д.</p>
+<p>Различные контейнеры имеют различные способы доступа к элементом. Например, vector и deque предоставляют так называемый "произвольный доступ" ("random access"), позволяющий работать с любым элементом контейнера, обращаясь к нему по индексу, между тем как stack и queue позволяют обращаться только к крайним элементам контейнера.</p>
+<p>Для обращения к элементам контейнеров существует понятие итератора. Итератор является обобщением идеи доступа к элементу по индексу и обобщением указателей языка C. Можно рассматривать итераторы, как "умные" указатели.</p>
+<h2>Объявление и использование итераторов</h2>
+<p>Итератор - это специальный класс, связанный с соответствующим классом контейнера.</p>
+<p>Если, например, имеется контейнер <span class="page_code_style">vector&lt;int&gt;</span>, то итератор, которым можно "бегать" по контейнеру будет объявляться так (it - имя, которое мы даем итератору):</p>
+<div class="page_code_style">
+<p>vector&lt;int&gt;::iterator it;</p>
+</div>
+<p>У контейнеров есть два метода, которые возвращают итератор на начало контейнера (метод begin()) и итератор на фиктивный элемент, следующий за концом контейнера (метод end()).Основные операции, которые можно выполнять с любыми итераторами:</p>
+<p>== - проверка двух итераторов на равенство.</p>
+<p>!= - проверка двух итераторов на неравенство.</p>
+<p>++ - инкремент (увеличение итератора), то есть переход к следующему элементу контейнера.</p>
+<p>— - декремент (уменьшение итератора), то есть переход к предыдущему элементу контейнера.</p>
+<p>Операторы являются "указателями", то есть чтобы получить доступ к значению элемента, на который указывает итератор, его нужно разыменовать при помощи унарного оператора "*".</p>
+<p>Пример вывода всех элементов контейнера при помощи итератора:</p>
+<div class="page_code_style">
+<p>for (vector&lt;int&gt;::iterator it = a.begin(); it != a.end(); ++it)</p>
+<p>&nbsp;&nbsp;&nbsp; cout &lt;&lt; *it &lt;&lt; " ";</p>
+</div>
+<p>Здесь мы объявляем итератор, присваиваем ему значение, которое возвращает метод begin(), то есть становимся в начало вектора, затем увеличиваем итератор, пока не выйдем на фиктивный элемент в конце вектора, который возвращает метод end(), при выводе значения нужно разыменовывать итератор при помощи операции "*".</p><h2>Итераторы контейнера vector</h2>
+<p>Вектор - это контейнер, элементы которого хранятся в памяти последовательно, и индексируются начиная с 0. Поэтому итераторы векторов поддерживают дополнительную функциональность.</p>
+<p>К итератору вектора можно прибавлять целое число <span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-1-Frame" tabindex="0" style="font-size: 100%; display: inline-block; position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>k</mi></math>" role="presentation"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.211ex" height="2.194ex" viewBox="0 -817.1 521.5 944.5" role="img" focusable="false" style="vertical-align: -0.296ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#MJMATHI-6B" x="0" y="0"></use></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>k</mi></math></span></span><script type="math/tex" id="MathJax-Element-1">k</script>, что означает перемещение на <span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-2-Frame" tabindex="0" style="font-size: 100%; display: inline-block; position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>k</mi></math>" role="presentation"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.211ex" height="2.194ex" viewBox="0 -817.1 521.5 944.5" role="img" focusable="false" style="vertical-align: -0.296ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#MJMATHI-6B" x="0" y="0"></use></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>k</mi></math></span></span><script type="math/tex" id="MathJax-Element-2">k</script> элементов. Если значение <span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-3-Frame" tabindex="0" style="font-size: 100%; display: inline-block; position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>k</mi><mo>&amp;lt;</mo><mn>0</mn></math>" role="presentation"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="5.472ex" height="2.194ex" viewBox="0 -817.1 2356.1 944.5" role="img" focusable="false" style="vertical-align: -0.296ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#MJMATHI-6B" x="0" y="0"></use><use xlink:href="#MJMAIN-3C" x="799" y="0"></use><use xlink:href="#MJMAIN-30" x="1855" y="0"></use></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>k</mi><mo>&lt;</mo><mn>0</mn></math></span></span><script type="math/tex" id="MathJax-Element-3">k<0</script>, то перемещение осуществляется в сторону начала вектора.</p>
+<p>Таким образом, чтобы получить итератор на <span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-4-Frame" tabindex="0" style="font-size: 100%; display: inline-block; position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>k</mi></math>" role="presentation"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.211ex" height="2.194ex" viewBox="0 -817.1 521.5 944.5" role="img" focusable="false" style="vertical-align: -0.296ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#MJMATHI-6B" x="0" y="0"></use></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>k</mi></math></span></span><script type="math/tex" id="MathJax-Element-4">k</script>-й элемент вектора от начала, можно взять итератор, который вернет метод begin() и прибавить к нему <span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-5-Frame" tabindex="0" style="font-size: 100%; display: inline-block; position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>k</mi></math>" role="presentation"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.211ex" height="2.194ex" viewBox="0 -817.1 521.5 944.5" role="img" focusable="false" style="vertical-align: -0.296ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#MJMATHI-6B" x="0" y="0"></use></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>k</mi></math></span></span><script type="math/tex" id="MathJax-Element-5">k</script>.</p>
+<p>Эта особенность итераторов широко используется в разных алгоритмах. Например, алгоритм сортировки sort() получает два итератора - на первый элемент и на элемент, следующий за последним. Для сортировки вектора a обычно делают такой вызов:</p>
+<div class="page_code_style">
+<p>sort(a.begin(), a.end())</p>
+</div>
+<p>Но используя операции сложения итератора с числом можно задать произвольный фрагмент вектора для сортировки. Например, чтобы отсортировать весь вектор, не трогая последний элемент:</p>
+<div class="page_code_style">
+<p>sort(a.begin(), a.end() - 1)</p>
+</div>
+<p>Чтобы отсортировать вектор. не трогая первый и последний элемент:</p>
+<div class="page_code_style">
+<p>sort(a.begin() + 1, a.end() - 1)</p>
+</div>
+<p>Чтобы отсортировать фрагмент вектора из 10 элементов, начиная с элемента с индексом 3:</p>
+<div class="page_code_style">
+<p>sort(a.begin() + 3, a.begin() + 13)</p>
+</div>
+<p>Чтобы отсортировать 10 последних элементов вектора:</p>
+<div class="page_code_style">
+<p>sort(a.end() - 10, a.end())</p>
+</div>
+<p>Из одного итератора можно вычитать другой итератор. Например, разница между итераторами begin()+7 и begin()+2 будет равна числу 5. А разница между итераторами end() и begin() будет равна количеству элементов в векторе.</p>
+<p>Итераторы вектора можно сравнивать при помощи неравеств &lt;, &gt;, &lt;=, &gt;=, которые будут возвращать true или false в зависимости от того, какой элемент находится раньше (имеет меньший адрес.</p>
+<p>У вектора есть методы erase и insert, которые позволяют удалять и вставлять элементы в вектор, используя итераторы.</p>
+<h3>erase</h3>
+<p>Метод erase удаляет один элемент или последовательность элемента из вектора. Для удаления одного элемента нужно дать итератор на этот элемент. Например, для удаление первого элемента вектора:</p>
+<div class="page_code_style">
+<p>a.erase(a.begin());</p>
+</div>
+<p>а для удаления последовательности передается два итератора - на первый элемент и на элемент, следующий за последним элементом. То есть вызов:</p>
+<div class="page_code_style">
+<p>a.erase(a.begin() + k1, a.begin() + k2);</p>
+</div>
+<p>удалит k2 - k1 элемент начиная от a[k1] (включительно) и до a[k2] (не включительно).</p>
+<h3>insert</h3>
+<p>Метод insert позволяет вставить в середину вектора один элемент, несколько равных элементов, или фрагмент этого же и другого вектора.</p>
+<p>Первый параметр метода insert() - итератор, указывающий позицию для вставки.</p>
+<p>Остальные параметры могут быть следующими.</p>
+<p>Если указан еще один параметр, то вставляется одно значение, равное этому. Например:</p>
+<div class="page_code_style">
+<p>a.insert(a.begin() + 5, val)</p>
+</div>
+<p>вставляет значение val в элемент a[5] вектора. То, что ранее было в элементе a[5] и далее сдвигается вправо.</p>
+<p>Метод insert с тремя параметрами insert(pos, n, val) вставляет n значений, равных val.</p>
+<p>А метод insert с тремя параметрами insert(pos, it1, it2) вставляет в позицию pos фрагмент вектора начиная с итератора it1 до итератора it2 (разумееется, не включая it2).</p>
+<p>Пример такого использования, который удваивает вектор:</p>
+<div class="page_code_style">
+<p>a.insert(a.end(), a.begin(), a.end())</p>
+</div><h2>reverse_iterator</h2>
+<p>У вектора и некоторых других контейнеров есть понятие reverse_iterator - это итератор, который движется в обратном порядке.</p>
+<p>Метод rbegin() возвращает reverse_iterator на последний элемент контейнера. Метод rend() возвращает reverse_iterator на фиктивный элемент, перед первым элементом контейнера.</p>
+<p>Инкремент reverse_iterator приводит к движению к началу контейнера.</p>
+<p>Пример использования reverse_iterator для вывода элементов контейнера в обратном порядке:</p>
+<div class="page_code_style">
+<p>for (vector&lt;int&gt;::reverse_iterator it = a.rbegin(); it != a.rend(); ++it)</p>
+<p>&nbsp;&nbsp;&nbsp; cout &lt;&lt; *it &lt;&lt; " ";</p>
+</div><h2>auto-тип в C++11</h2>
+<p>В новом стандарте языка C++ 2011 года (называется C++11) появилось понятие auto-типа. В этом случае не требуется объявлять тип переменной явно, можно указать, что переменная имеет тип auto и проинициализировать переменную значением. В этом случае компилятор сам определит тип переменной (автоматически) исходя из типа значения, которым она проинициализирована.</p>
+<p>Например,</p>
+<div class="page_code_style">
+<p>auto x = 1; // переменная x будет типа int</p>
+<p>auto y = 1.0; // переменная y будет типа double</p>
+</div>
+<p>Как правило auto-типы используются для итераторов, например, можно писать цикл так:</p>
+<div class="page_code_style">
+<p>for (auto it = a.begin(); it != a.end(); ++it)</p>
+</div><h2>Цикл по значению контейнера в C++11</h2>
+<p>В С++11 появилась возможность органи-зации range-based циклов (то, что называется циклом "foreach"), когда переменная принимает последовательно все значения из данного контейнера.</p>
+<p>Например, если объявить</p>
+<div class="page_code_style">
+<p>vector&lt;int&gt; a;</p>
+</div>
+<p>то вывести все его элементы можно при помощи цикла:</p>
+<div class="page_code_style">
+<p>for (int elem: a)</p>
+<p>&nbsp;&nbsp;&nbsp; cout &lt;&lt; elem &lt;&lt; " ";</p>
+</div>
+<p>Или можно использовать auto-тип:</p>
+<div class="page_code_style">
+<p>for (auto elem: a)</p>
+<p>&nbsp;&nbsp;&nbsp; cout &lt;&lt; elem &lt;&lt; " ";</p>
+</div>
+<p>В данном случае elem будет принимать все значения из контейнера a, который может быть вектором, множеством, деком и т.д. Но чтобы модицифицировать элементы такого контейнера при помощи цикла нужно сделать цикл, в котором переменной цикла была бы ссылка на элемент контейнера, а не значение. Это можно сделать так (все элементы контейнера увеличиваются на 1):</p>
+<div class="page_code_style">
+<p>for (auto &amp; elem: a)</p>
+<p>&nbsp;&nbsp;&nbsp; ++elem;</p>
+</div></div><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script></body></html>

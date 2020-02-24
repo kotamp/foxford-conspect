@@ -1,0 +1,7 @@
+<!doctype html>
+<html><head><link rel="stylesheet" href="../page.css"><title>5. Строковые потоки stringstream в С++</title></head><body><h1>5. Строковые потоки stringstream в С++</h1>
+<div class="page_content_main"><p>Аналогично функциям sscanf и sprintf в языке C, в языке C++ есть возможность считывать данные из строк (как будто бы из файла) и выводить данные в строки.</p>
+<p>Для этого используются описанные в заголовочном файле sstream объекты istringstream (поток для чтения из строки) и ostringstream(поток для вывода из строки).</p>
+<p>Приведем пример использования этих потоков. Пусть в строке s записано два числа через пробел, мы считаем их при используя объект istringstream, связанный со строкой, затем выведем в объект ostringstream эти же числа, увеличенные на 1 и скопируем результат в строку s.</p>
+<div class="page_code_style">&nbsp;&nbsp;&nbsp; string s = "123 456";<br><br>&nbsp;&nbsp;&nbsp; istringstream ss(s);<br>&nbsp;&nbsp;&nbsp; int a, b;<br>&nbsp;&nbsp;&nbsp; ss &gt;&gt; a &gt;&gt; b;<br><br>&nbsp;&nbsp;&nbsp; ostringstream os;<br>&nbsp;&nbsp;&nbsp; os &lt;&lt; a + 1 &lt;&lt; " " &lt;&lt; b + 1;<br>&nbsp;&nbsp;&nbsp; s = os.str();</div></div><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script></body></html>

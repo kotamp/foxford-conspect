@@ -1,0 +1,14 @@
+<!doctype html>
+<html><head><link rel="stylesheet" href="../page.css"><title>5. Чтение и вывод в строки в языке C при помощи функций sprintf и sscanf</title></head><body><h1>5. Чтение и вывод в строки в языке C при помощи функций sprintf и sscanf</h1>
+<div class="page_content_main"><p>В языке C есть функции sscanf и sprintf, позволяющие осуществлять форматный ввод-вывод с использованием строк. Например, пусть строка s содержит два целых числа, записанных через пробел и необходимо извлечь значения этих чисел и записать их в переменные a и b. Это делается при помощи функции sscanf, у которой первый параметр - строка, из которой читаются данные (строка языка C, то есть массив символов или указатель типа char *), а остальные параметры - как у функции scanf, то есть форматная строка и адреса переменных для записи данных. Пример:<br>&nbsp;</p>
+
+<div class="page_code_style">
+<p>sscanf(s, "%d%d", &amp;a, &amp;b);</p>
+</div>
+
+<p>Функция sscanf реализует все возможности чтения данных, которые есть в функция scanf и fscanf.<br>Аналогично для вывода данных не в файл, а в строку, используется функция sprintf. Её первый параметр - строка, остальные параметры - как для функции printf. Пример:<br>&nbsp;</p>
+<div class="page_code_style">
+<p>sprintf(s, "%d %d", a, b);</p>
+</div>
+<p><br>Эти функции объявлены в заголовочном файле stdio.h.<br>&nbsp;</p></div><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script></body></html>

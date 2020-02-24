@@ -1,0 +1,333 @@
+<!doctype html>
+<html><head><link rel="stylesheet" href="../page.css"><title>16. Теория графов</title></head><body><h1>16. Теория графов</h1>
+<div class="page_content_main"><h2>Основные термины теории графов</h2>
+<p>Многие объекты, возникающие в жизни человека, могут быть смоделированы (представлены в памяти компьютера) при помощи графов. Например, транспортные схемы (схема метрополитена и т.&nbsp;д.) изображают в виде станций, соединенных линиями. В терминах графов станции называются вершинами графа а линии – ребра.</p>
+<p><strong>Графом</strong> называется конечное множество вершин и множество ребер. Каждому ребру сопоставлены две вершины – концы ребра.</p>
+<p>Бывают различные варианты определения графа. В данном определении концы у каждого ребра – равноправны. В этом случае нет разницы где начало, а где – конец у ребра. Но, например, в транспортных сетях бывают случаи одностороннего движения по ребру, тогда говорят об <strong>ориентированном</strong> графе – графе, у ребер которого одна вершина считается начальной, а другая – конечной.<br> Если некоторое ребро u соединяет две вершины A и B графа, то говорят, что ребро u <strong>инцидентно</strong> вершинам A и B, а вершины в свою очередь инцидентны ребру u. Вершины, соединенные ребром, называются <strong>смежными</strong>.</p>
+<p>Ребра называются <strong>кратными</strong>, если они соединяют одну и ту же пару вершин (а в случае ориентированного графа – если у них совпадают начала и концы). Ребро называется <strong>петлей</strong>, если у него совпадают начало и конец. Во многих задачах кратные ребра и петли не представляют интереса, поэтому могут рассматриваться только графы без петель и кратных ребер. Такие графы называю <strong>простыми</strong>.</p>
+<p>Степенью вершины в неориентированном графе называется число инцидентных данной вершине ребер (при этом петля считается два раза, то есть степень - это количество «концов» ребер, входящих в вершину). Довольно очевидно, что сумма степеней всех вершин равна удвоенному числу ребер в графе. Отсюда можно посчитать максимальное число ребер в простом графе - если у графа <span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-1-Frame" tabindex="0" style="font-size: 100%; display: inline-block; position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>n</mi></math>" role="presentation"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.395ex" height="1.611ex" viewBox="0 -566.3 600.5 693.7" role="img" focusable="false" style="vertical-align: -0.296ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#MJMATHI-6E" x="0" y="0"></use></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi></math></span></span><script type="math/tex" id="MathJax-Element-1">n</script> вершин, то степень каждой из них равна <span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-2-Frame" tabindex="0" style="font-size: 100%; display: inline-block; position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>n</mi><mo>&amp;#x2212;</mo><mn>1</mn></math>" role="presentation"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="5.398ex" height="2.194ex" viewBox="0 -754.4 2323.9 944.5" role="img" focusable="false" style="vertical-align: -0.442ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#MJMATHI-6E" x="0" y="0"></use><use xlink:href="#MJMAIN-2212" x="822" y="0"></use><use xlink:href="#MJMAIN-31" x="1823" y="0"></use></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi><mo>−</mo><mn>1</mn></math></span></span><script type="math/tex" id="MathJax-Element-2">n-1</script>, а, значит, число ребер есть <span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-3-Frame" tabindex="0" style="font-size: 100%; display: inline-block; position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>n</mi><mo stretchy=&quot;false&quot;>(</mo><mi>n</mi><mo>&amp;#x2212;</mo><mn>1</mn><mo stretchy=&quot;false&quot;>)</mo><mrow class=&quot;MJX-TeXAtom-ORD&quot;><mo>/</mo></mrow><mn>2</mn></math>" role="presentation"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="10.926ex" height="2.776ex" viewBox="0 -817.1 4704.4 1195.3" role="img" focusable="false" style="vertical-align: -0.878ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#MJMATHI-6E" x="0" y="0"></use><use xlink:href="#MJMAIN-28" x="600" y="0"></use><use xlink:href="#MJMATHI-6E" x="990" y="0"></use><use xlink:href="#MJMAIN-2212" x="1812" y="0"></use><use xlink:href="#MJMAIN-31" x="2813" y="0"></use><use xlink:href="#MJMAIN-29" x="3313" y="0"></use><use xlink:href="#MJMAIN-2F" x="3703" y="0"></use><use xlink:href="#MJMAIN-32" x="4203" y="0"></use></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi><mo stretchy="false">(</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mrow class="MJX-TeXAtom-ORD"><mo>/</mo></mrow><mn>2</mn></math></span></span><script type="math/tex" id="MathJax-Element-3">n(n-1)/2</script>. Граф, в котором любые две вершины соединены одним ребром, называется полным <strong>графом</strong>.</p>
+<p>Также легко заметить следующий факт – в любом графе число вершин нечетной степени – четно. Этот факт называется <strong>«леммой о рукопожатиях»</strong> – в любой компании число людей, сделавших нечетное число рукопожатий всегда четно.</p>
+<h2>Пути, циклы, компоненты связности</h2>
+<p><strong>Путем</strong>&nbsp;на графе называется последовательность ребер <span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-4-Frame" tabindex="0" style="font-size: 100%; display: inline-block; position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><msub><mi>u</mi><mn>1</mn></msub></math>" role="presentation"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="2.384ex" height="1.902ex" viewBox="0 -566.3 1026.4 819.1" role="img" focusable="false" style="vertical-align: -0.587ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#MJMATHI-75" x="0" y="0"></use><use transform="scale(0.707)" xlink:href="#MJMAIN-31" x="809" y="-213"></use></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>u</mi><mn>1</mn></msub></math></span></span><script type="math/tex" id="MathJax-Element-4">u_1</script>, <span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-5-Frame" tabindex="0" style="font-size: 100%; display: inline-block; position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><msub><mi>u</mi><mn>2</mn></msub></math>" role="presentation"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="2.384ex" height="1.902ex" viewBox="0 -566.3 1026.4 819.1" role="img" focusable="false" style="vertical-align: -0.587ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#MJMATHI-75" x="0" y="0"></use><use transform="scale(0.707)" xlink:href="#MJMAIN-32" x="809" y="-213"></use></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>u</mi><mn>2</mn></msub></math></span></span><script type="math/tex" id="MathJax-Element-5">u_2</script>, …, <span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-6-Frame" tabindex="0" style="font-size: 100%; display: inline-block; position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><msub><mi>u</mi><mi>k</mi></msub></math>" role="presentation"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="2.418ex" height="1.902ex" viewBox="0 -566.3 1041.3 819.1" role="img" focusable="false" style="vertical-align: -0.587ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#MJMATHI-75" x="0" y="0"></use><use transform="scale(0.707)" xlink:href="#MJMATHI-6B" x="809" y="-213"></use></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>u</mi><mi>k</mi></msub></math></span></span><script type="math/tex" id="MathJax-Element-6">u_k</script>, в которой конец одного ребра является началом следующего ребра. Начало первого ребра называется началом пути, конец последнего ребра - концом пути. Если начало и конец пути совпадают, то такой путь называется&nbsp;<strong>циклом</strong>.</p>
+<p>Путь, который проходит через каждую вершину не более одного раза называется простым путем. Аналогично определяется&nbsp;<strong>простой цикл</strong>.</p>
+<p>Граф называется&nbsp;<strong>связным</strong>, если между любыми двумя его вершинами есть путь. Если граф несвязный, то его можно разбить на несколько частей (подграфов), каждая из которых будет связной. Такие части называются&nbsp;<strong>компонентами связности</strong>. Возможно, что некоторые компоненты связности будут состоять всего лишь из одной вершины.</p>
+<p>Понятно, что в графе из <span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-7-Frame" tabindex="0" style="font-size: 100%; display: inline-block; position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>n</mi></math>" role="presentation"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.395ex" height="1.611ex" viewBox="0 -566.3 600.5 693.7" role="img" focusable="false" style="vertical-align: -0.296ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#MJMATHI-6E" x="0" y="0"></use></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi></math></span></span><script type="math/tex" id="MathJax-Element-7">n</script> вершин может быть от 1 до <span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-8-Frame" tabindex="0" style="font-size: 100%; display: inline-block; position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>n</mi></math>" role="presentation"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.395ex" height="1.611ex" viewBox="0 -566.3 600.5 693.7" role="img" focusable="false" style="vertical-align: -0.296ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#MJMATHI-6E" x="0" y="0"></use></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi></math></span></span><script type="math/tex" id="MathJax-Element-8">n</script> компонент связности.</p>
+<h2>Деревья</h2>
+<p>Рассмотрим связный граф из&nbsp;<span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-9-Frame" tabindex="0" style="font-size: 100%; display: inline-block; position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>n</mi></math>" role="presentation"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.395ex" height="1.611ex" viewBox="0 -566.3 600.5 693.7" role="img" focusable="false" style="vertical-align: -0.296ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#MJMATHI-6E" x="0" y="0"></use></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi></math></span></span><script type="math/tex" id="MathJax-Element-9">n</script>&nbsp;вершин. Какое минимальное число ребер может быть в нем?</p>
+<p>Несложно построить пример графа, содержащего <span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-10-Frame" tabindex="0" style="font-size: 100%; display: inline-block; position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>n</mi><mo>&amp;#x2212;</mo><mn>1</mn></math>" role="presentation"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="5.398ex" height="2.194ex" viewBox="0 -754.4 2323.9 944.5" role="img" focusable="false" style="vertical-align: -0.442ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#MJMATHI-6E" x="0" y="0"></use><use xlink:href="#MJMAIN-2212" x="822" y="0"></use><use xlink:href="#MJMAIN-31" x="1823" y="0"></use></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi><mo>−</mo><mn>1</mn></math></span></span><script type="math/tex" id="MathJax-Element-10">n-1</script>&nbsp;ребро – например, можно взять одну вершину графа и соединить ее с <span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-11-Frame" tabindex="0" style="font-size: 100%; display: inline-block; position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>n</mi><mo>&amp;#x2212;</mo><mn>1</mn></math>" role="presentation"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="5.398ex" height="2.194ex" viewBox="0 -754.4 2323.9 944.5" role="img" focusable="false" style="vertical-align: -0.442ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#MJMATHI-6E" x="0" y="0"></use><use xlink:href="#MJMAIN-2212" x="822" y="0"></use><use xlink:href="#MJMAIN-31" x="1823" y="0"></use></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi><mo>−</mo><mn>1</mn></math></span></span><script type="math/tex" id="MathJax-Element-11">n-1</script>&nbsp;ребром. Нетрудно также понять, что в таком графе не должно быть простых циклов (иначе в простом цикле можно выбросить одно ребро и граф останется связным). Такие графы называются&nbsp;<strong>деревьями</strong>.</p>
+<p>Определение –&nbsp;<strong>деревом</strong>&nbsp;называется связный граф не содержащий простых циклов.</p>
+<p>Нетрудно видеть, что в дереве нельзя удалить ни одного ребра, чтобы граф остался связным. Поэтому дерево является минимальным связным графом.</p>
+<p>Основным свойством дерева является следующая теорема:</p>
+<p><em>Дерево из&nbsp;</em><em><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-12-Frame" tabindex="0" style="font-size: 100%; display: inline-block; position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>n</mi></math>" role="presentation"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.395ex" height="1.611ex" viewBox="0 -566.3 600.5 693.7" role="img" focusable="false" style="vertical-align: -0.296ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#MJMATHI-6E" x="0" y="0"></use></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi></math></span></span><script type="math/tex" id="MathJax-Element-12">n</script></em><em>&nbsp;вершин содержит&nbsp;</em><em><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-13-Frame" tabindex="0" style="font-size: 100%; display: inline-block; position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>n</mi><mo>&amp;#x2212;</mo><mn>1</mn></math>" role="presentation"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="5.398ex" height="2.194ex" viewBox="0 -754.4 2323.9 944.5" role="img" focusable="false" style="vertical-align: -0.442ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#MJMATHI-6E" x="0" y="0"></use><use xlink:href="#MJMAIN-2212" x="822" y="0"></use><use xlink:href="#MJMAIN-31" x="1823" y="0"></use></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi><mo>−</mo><mn>1</mn></math></span></span><script type="math/tex" id="MathJax-Element-13">n-1</script></em><em>&nbsp;ребро.</em></p>
+<p>Эту теорему можно доказать математической индукцией по&nbsp;n, используя лемму о висячей вершине – в каждом дереве есть хотя бы одна вершина степени 1. Эту вершину можно удалить и далее применить предположение индукции для меньшего числа вершин.</p>
+<p>Можно показать, что эквивалентны следующие определения дерева:</p>
+<ol>
+<li>Деревом называется связный граф не содержащий простых циклов.</li>
+<li>Деревом называется связный граф, содержащий <span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-14-Frame" tabindex="0" style="font-size: 100%; display: inline-block; position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>n</mi></math>" role="presentation"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.395ex" height="1.611ex" viewBox="0 -566.3 600.5 693.7" role="img" focusable="false" style="vertical-align: -0.296ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#MJMATHI-6E" x="0" y="0"></use></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi></math></span></span><script type="math/tex" id="MathJax-Element-14">n</script>&nbsp;вершин и <span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-15-Frame" tabindex="0" style="font-size: 100%; display: inline-block; position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>n</mi><mo>&amp;#x2212;</mo><mn>1</mn></math>" role="presentation"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="5.398ex" height="2.194ex" viewBox="0 -754.4 2323.9 944.5" role="img" focusable="false" style="vertical-align: -0.442ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#MJMATHI-6E" x="0" y="0"></use><use xlink:href="#MJMAIN-2212" x="822" y="0"></use><use xlink:href="#MJMAIN-31" x="1823" y="0"></use></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi><mo>−</mo><mn>1</mn></math></span></span><script type="math/tex" id="MathJax-Element-15">n-1</script>&nbsp;ребро.</li>
+<li>Деревом называется связный граф, который при удалении любого ребра перестает быть связным.</li>
+<li>Деревом называется граф, в котором любые две вершины соединены ровно одним простым путем.</li>
+</ol>
+<p>Очень часто в дереве выделяется одна вершина, называемая корнем дерева, дерево с выделенным корнем называют корневым или подвешенным деревом. Примером такого дерева является генеалогическое дерево.</p>
+<h2>Способы представления графов в памяти</h2>
+<p>Представление графов в памяти – это способ хранения информации о ребрах графа, позволяющий решать следующие задачи:</p>
+<ol>
+<li>Для двух данных вершин <span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-16-Frame" tabindex="0" style="font-size: 100%; display: inline-block; position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>u</mi></math>" role="presentation"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.33ex" height="1.611ex" viewBox="0 -566.3 572.5 693.7" role="img" focusable="false" style="vertical-align: -0.296ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#MJMATHI-75" x="0" y="0"></use></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>u</mi></math></span></span><script type="math/tex" id="MathJax-Element-16">u</script>&nbsp;и <span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-17-Frame" tabindex="0" style="font-size: 100%; display: inline-block; position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>b</mi></math>" role="presentation"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="0.998ex" height="2.194ex" viewBox="0 -817.1 429.5 944.5" role="img" focusable="false" style="vertical-align: -0.296ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#MJMATHI-62" x="0" y="0"></use></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>b</mi></math></span></span><script type="math/tex" id="MathJax-Element-17">b</script>&nbsp;проверить, соединены ли вершины <span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-18-Frame" tabindex="0" style="font-size: 100%; display: inline-block; position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>u</mi></math>" role="presentation"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.33ex" height="1.611ex" viewBox="0 -566.3 572.5 693.7" role="img" focusable="false" style="vertical-align: -0.296ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#MJMATHI-75" x="0" y="0"></use></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>u</mi></math></span></span><script type="math/tex" id="MathJax-Element-18">u</script>&nbsp;и <span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-19-Frame" tabindex="0" style="font-size: 100%; display: inline-block; position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>v</mi></math>" role="presentation"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.128ex" height="1.611ex" viewBox="0 -566.3 485.5 693.7" role="img" focusable="false" style="vertical-align: -0.296ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#MJMATHI-76" x="0" y="0"></use></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>v</mi></math></span></span><script type="math/tex" id="MathJax-Element-19">v</script>&nbsp;ребром.</li>
+<li>Перебрать все ребра, исходящие из данной вершины <span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-20-Frame" tabindex="0" style="font-size: 100%; display: inline-block; position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>u</mi></math>" role="presentation"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.33ex" height="1.611ex" viewBox="0 -566.3 572.5 693.7" role="img" focusable="false" style="vertical-align: -0.296ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#MJMATHI-75" x="0" y="0"></use></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>u</mi></math></span></span><script type="math/tex" id="MathJax-Element-20">u</script>&nbsp;.</li>
+</ol>
+<p>При этом способ хранения графов в памяти должен учитывать возможности работы с ориентированными и неориентированными графами. По умолчанию будем предполагать, что хранимый граф является простым, но можно рассмотреть вопрос и о представлении графов с петлями и кратными ребрами.</p>
+<p>Рассмотрим следующий граф:</p>
+<p><img src="/uploads/tinymce_image/image/1959/1.png" alt="" width=""></p>
+<p>При представлении графа&nbsp;<strong>матрицей смежности</strong>&nbsp;информация о ребрах графа хранится в квадратной матрице (двумерном списке), где элемент A[i][j] равен1, если ребра i и j соединены ребром и равен 0 в противном случае. Для данного примера матрица смежности будет выглядеть так:</p>
+<table border="1" cellspacing="0" cellpadding="4"><colgroup><col width="30"><col width="31"><col width="31"><col width="31"><col width="31"><col width="30"></colgroup>
+<tbody>
+<tr valign="TOP">
+<td width="30">&nbsp;</td>
+<td width="31">
+<p align="CENTER">1</p>
+</td>
+<td width="31">
+<p align="CENTER">2</p>
+</td>
+<td width="31">
+<p align="CENTER">3</p>
+</td>
+<td width="31">
+<p align="CENTER">4</p>
+</td>
+<td width="30">
+<p align="CENTER">5</p>
+</td>
+</tr>
+<tr valign="TOP">
+<td width="30">
+<p align="CENTER">1</p>
+</td>
+<td width="31">
+<p align="CENTER">0</p>
+</td>
+<td width="31">
+<p align="CENTER">1</p>
+</td>
+<td width="31">
+<p align="CENTER">1</p>
+</td>
+<td width="31">
+<p align="CENTER">1</p>
+</td>
+<td width="30">
+<p align="CENTER">0</p>
+</td>
+</tr>
+<tr valign="TOP">
+<td width="30">
+<p align="CENTER">2</p>
+</td>
+<td width="31">
+<p align="CENTER">1</p>
+</td>
+<td width="31">
+<p align="CENTER">0</p>
+</td>
+<td width="31">
+<p align="CENTER">0</p>
+</td>
+<td width="31">
+<p align="CENTER">1</p>
+</td>
+<td width="30">
+<p align="CENTER">1</p>
+</td>
+</tr>
+<tr valign="TOP">
+<td width="30">
+<p align="CENTER">3</p>
+</td>
+<td width="31">
+<p align="CENTER">1</p>
+</td>
+<td width="31">
+<p align="CENTER">0</p>
+</td>
+<td width="31">
+<p align="CENTER">0</p>
+</td>
+<td width="31">
+<p align="CENTER">1</p>
+</td>
+<td width="30">
+<p align="CENTER">0</p>
+</td>
+</tr>
+<tr valign="TOP">
+<td width="30">
+<p align="CENTER">4</p>
+</td>
+<td width="31">
+<p align="CENTER">1</p>
+</td>
+<td width="31">
+<p align="CENTER">1</p>
+</td>
+<td width="31">
+<p align="CENTER">1</p>
+</td>
+<td width="31">
+<p align="CENTER">0</p>
+</td>
+<td width="30">
+<p align="CENTER">1</p>
+</td>
+</tr>
+<tr valign="TOP">
+<td width="30">
+<p align="CENTER">5</p>
+</td>
+<td width="31">
+<p align="CENTER">0</p>
+</td>
+<td width="31">
+<p align="CENTER">1</p>
+</td>
+<td width="31">
+<p align="CENTER">0</p>
+</td>
+<td width="31">
+<p align="CENTER">1</p>
+</td>
+<td width="30">
+<p align="CENTER">0</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Если граф неориентированный, то матрица смежности всегда симметрична относительно главной диагонали.<br>При использовании матрицы смежности удобно проверять соединены ли две вершины ребром – это просмотр одного элемента матрицы A[i][j], но сложнее перебирать все ребра, исходящие из данной вершины (для этого необходимо перебрать все оставшиеся вершины и проверить, соединены ли они ребром). Также матрица смежности требует <span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-21-Frame" tabindex="0" style="font-size: 100%; display: inline-block; position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>O</mi><mo stretchy=&quot;false&quot;>(</mo><msup><mi>n</mi><mn>2</mn></msup><mo stretchy=&quot;false&quot;>)</mo></math>" role="presentation"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="6.032ex" height="3.068ex" viewBox="0 -942.5 2596.9 1320.7" role="img" focusable="false" style="vertical-align: -0.878ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#MJMATHI-4F" x="0" y="0"></use><use xlink:href="#MJMAIN-28" x="763" y="0"></use><g transform="translate(1153,0)"><use xlink:href="#MJMATHI-6E" x="0" y="0"></use><use transform="scale(0.707)" xlink:href="#MJMAIN-32" x="849" y="513"></use></g><use xlink:href="#MJMAIN-29" x="2207" y="0"></use></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>O</mi><mo stretchy="false">(</mo><msup><mi>n</mi><mn>2</mn></msup><mo stretchy="false">)</mo></math></span></span><script type="math/tex" id="MathJax-Element-21">O(n^2)</script>&nbsp;памяти и может оказаться неэффективным способом хранения дерева или разреженных графов.</p>
+<p>При представлении графа&nbsp;<strong>списками смежности</strong>&nbsp;для каждой вершины i хранится список W[i] смежных с ней вершин. Для рассмотренного примера списки будут такими:</p>
+<div class="page_code_style">
+<p>W[1] = [2, 3, 4]<br>W[2] = [1, 4, 5]<br>W[3] = [1, 4]<br>W[4] = [1, 2, 3, 5]<br>W[5] = [2, 4]</p>
+</div>
+<p>Таким образом, весь граф можно представить одним списком, состоящим из вложенных списков смежности вершин.</p>
+<div class="page_code_style">
+<p>W = [[], [2, 3, 4], [1, 4, 5], [1, 4], [1, 2, 3, 5], [2, 4]]</p>
+</div>
+<p>Поскольку нумерация в нашем примере начинается с 0, то к списку добавлен еще один фиктивный элемент W[0].</p>
+<p>В языке С++ для представления списков смежности будем использовать тип vector&lt;vector&lt;int&gt; &gt;, то есть массив (вектор), элементами которого являются динамические массивы (векторы) чисел. В языке Python будут использоваться списки, элементами которого являются списки смежности.</p>
+<p>В таком способе удобно перебирать ребра, выходящие из вершины i (это просто список W[i]), но сложно проверять наличие ребра между вершинами i и j – для этого необходимо проверить, содержится ли число j в списке W[i]. Но в языке Python можно эту часть сделать более эффективной, если заменить списки на множества – тогда проверка существования ребра между двумя вершинами также будет выполняться за <span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-22-Frame" tabindex="0" style="font-size: 100%; display: inline-block; position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>O</mi><mo stretchy=&quot;false&quot;>(</mo><mn>1</mn><mo stretchy=&quot;false&quot;>)</mo></math>" role="presentation"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="4.745ex" height="2.776ex" viewBox="0 -817.1 2043 1195.3" role="img" focusable="false" style="vertical-align: -0.878ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#MJMATHI-4F" x="0" y="0"></use><use xlink:href="#MJMAIN-28" x="763" y="0"></use><use xlink:href="#MJMAIN-31" x="1153" y="0"></use><use xlink:href="#MJMAIN-29" x="1653" y="0"></use></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>O</mi><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo></math></span></span><script type="math/tex" id="MathJax-Element-22">O(1)</script>.&nbsp;</p>
+<p>При помощи матриц смежности и списков смежности можно представлять и неориентированные графы. В случае матрицы смежности A[i][j] будет равно 1, если есть ребро, начинающееся в вершине i и заканчивающееся в вершине j. В случае списков смежности наличие ребра из вершины i в вершину j означает, что в списке W[i] есть число j.</p>
+<p>Например, для такого графа:</p>
+<p><img src="/uploads/tinymce_image/image/1960/2.png" alt="" width=""></p>
+<p>Матрица смежностей будет следующей:</p>
+<table border="1" cellspacing="0" cellpadding="4"><colgroup><col width="30"><col width="31"><col width="31"><col width="31"><col width="31"><col width="30"></colgroup>
+<tbody>
+<tr valign="TOP">
+<td width="30">&nbsp;</td>
+<td width="31">
+<p align="CENTER">1</p>
+</td>
+<td width="31">
+<p align="CENTER">2</p>
+</td>
+<td width="31">
+<p align="CENTER">3</p>
+</td>
+<td width="31">
+<p align="CENTER">4</p>
+</td>
+<td width="30">
+<p align="CENTER">5</p>
+</td>
+</tr>
+<tr valign="TOP">
+<td width="30">
+<p align="CENTER">1</p>
+</td>
+<td width="31">
+<p align="CENTER">0</p>
+</td>
+<td width="31">
+<p align="CENTER">1</p>
+</td>
+<td width="31">
+<p align="CENTER">0</p>
+</td>
+<td width="31">
+<p align="CENTER">0</p>
+</td>
+<td width="30">
+<p align="CENTER">0</p>
+</td>
+</tr>
+<tr valign="TOP">
+<td width="30">
+<p align="CENTER">2</p>
+</td>
+<td width="31">
+<p align="CENTER">0</p>
+</td>
+<td width="31">
+<p align="CENTER">0</p>
+</td>
+<td width="31">
+<p align="CENTER">0</p>
+</td>
+<td width="31">
+<p align="CENTER">1</p>
+</td>
+<td width="30">
+<p align="CENTER">1</p>
+</td>
+</tr>
+<tr valign="TOP">
+<td width="30">
+<p align="CENTER">3</p>
+</td>
+<td width="31">
+<p align="CENTER">1</p>
+</td>
+<td width="31">
+<p align="CENTER">0</p>
+</td>
+<td width="31">
+<p align="CENTER">0</p>
+</td>
+<td width="31">
+<p align="CENTER">1</p>
+</td>
+<td width="30">
+<p align="CENTER">0</p>
+</td>
+</tr>
+<tr valign="TOP">
+<td width="30">
+<p align="CENTER">4</p>
+</td>
+<td width="31">
+<p align="CENTER">1</p>
+</td>
+<td width="31">
+<p align="CENTER">0</p>
+</td>
+<td width="31">
+<p align="CENTER">1</p>
+</td>
+<td width="31">
+<p align="CENTER">0</p>
+</td>
+<td width="30">
+<p align="CENTER">0</p>
+</td>
+</tr>
+<tr valign="TOP">
+<td width="30">
+<p align="CENTER">5</p>
+</td>
+<td width="31">
+<p align="CENTER">0</p>
+</td>
+<td width="31">
+<p align="CENTER">0</p>
+</td>
+<td width="31">
+<p align="CENTER">0</p>
+</td>
+<td width="31">
+<p align="CENTER">0</p>
+</td>
+<td width="30">
+<p align="CENTER">0</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>А списки смежности будут следующими:</p>
+<div class="page_code_style">
+<p>W[1] = [2]<br>W[2] = [4, 5]<br>W[3] = [1, 4]<br>W[4] = [1, 3]<br>W[5] = []</p>
+</div>
+<p>Приведем код считывания графа. Будем считать, что граф задается следующим образом: в первой строке записано число вершин&nbsp;n&nbsp;и число ребер&nbsp;m&nbsp;графа. Далее записаны&nbsp;m&nbsp;строк, содержащих по два числа – номера начальной и конечной вершины ребра. Например, первый граф из первого примера можно задать так:</p>
+<div class="page_code_style">
+<p>5 7<br>1 2<br>2 5<br>5 4<br>4 2<br>1 4<br>1 3<br>3 4</p>
+</div>
+<p>Пример заполнения матрицы смежности. Матрица создается размером <span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-23-Frame" tabindex="0" style="font-size: 100%; display: inline-block; position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mo stretchy=&quot;false&quot;>(</mo><mi>n</mi><mo>+</mo><mn>1</mn><mo stretchy=&quot;false&quot;>)</mo><mo>&amp;#x00D7;</mo><mo stretchy=&quot;false&quot;>(</mo><mi>n</mi><mo>+</mo><mn>1</mn><mo stretchy=&quot;false&quot;>)</mo></math>" role="presentation"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="17.254ex" height="2.776ex" viewBox="0 -817.1 7428.8 1195.3" role="img" focusable="false" style="vertical-align: -0.878ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#MJMAIN-28" x="0" y="0"></use><use xlink:href="#MJMATHI-6E" x="389" y="0"></use><use xlink:href="#MJMAIN-2B" x="1212" y="0"></use><use xlink:href="#MJMAIN-31" x="2212" y="0"></use><use xlink:href="#MJMAIN-29" x="2713" y="0"></use><use xlink:href="#MJMAIN-D7" x="3325" y="0"></use><use xlink:href="#MJMAIN-28" x="4325" y="0"></use><use xlink:href="#MJMATHI-6E" x="4715" y="0"></use><use xlink:href="#MJMAIN-2B" x="5538" y="0"></use><use xlink:href="#MJMAIN-31" x="6538" y="0"></use><use xlink:href="#MJMAIN-29" x="7039" y="0"></use></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo stretchy="false">(</mo><mi>n</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo><mo>×</mo><mo stretchy="false">(</mo><mi>n</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo></math></span></span><script type="math/tex" id="MathJax-Element-23">(n+1) \times (n+1)</script>&nbsp;, так как используется нумерация с единицы:</p>
+<p><strong>C++</strong></p>
+<div class="page_code_style">
+<p>cin &gt;&gt; n &gt;&gt; m;<br>vector &lt;vector&lt;int&gt; &gt; A(n + 1, vector&lt;int&gt;(n + 1));<br>for (int i = 0; i &lt; m; ++ i) {<br>&nbsp;&nbsp;&nbsp; int u, v;<br>&nbsp;&nbsp;&nbsp; cin &gt;&gt; u &gt;&gt; v;<br>&nbsp;&nbsp;&nbsp; A[u][v] = 1;<br>&nbsp;&nbsp;&nbsp; // A[v][u] = 1;<br>}</p>
+</div>
+<p><strong>Python</strong></p>
+<div class="page_code_style">
+<p>n, m = map(int, input().split())<br>A = [[0] * (n + 1) for i in range(n + 1)]<br>for i in range(m):<br>&nbsp;&nbsp;&nbsp; u, v = map(int, input().split())<br>&nbsp;&nbsp;&nbsp; A[u][v] = 1<br>&nbsp;&nbsp;&nbsp; # A[v][u] = 1</p>
+</div>
+<p>Пример заполнения списков смежности, используются множества вместо списков:</p>
+<p><strong>C++</strong></p>
+<div class="page_code_style">
+<p>cin &gt;&gt; n &gt;&gt; m;<br>vector &lt;vector&lt;int&gt; &gt; W(n + 1);<br>for (int i = 0; i &lt; m; ++ i) {<br>&nbsp;&nbsp;&nbsp; int u, v;<br>&nbsp;&nbsp;&nbsp; cin &gt;&gt; u &gt;&gt; v;<br>&nbsp;&nbsp;&nbsp; W[u].push_back(v);<br>&nbsp;&nbsp;&nbsp; // W[v].push_back(u);<br>}</p>
+</div>
+<p><strong>Python</strong></p>
+<div class="page_code_style">
+<p>n, m = map(int, input().split())<br>W = [set() for i in range(n + 1)]<br>for i in range(m):<br>&nbsp;&nbsp;&nbsp; u, v = map(int, input().split())<br>&nbsp;&nbsp;&nbsp; W[u].add(v)<br>&nbsp;&nbsp;&nbsp; # W[v].add(u)</p>
+</div>
+<p>Здесь также используется нумерация с единицы. Во всех примерах закомментированная строчка нужна в случае неориентированного графа, тогда для каждого считанного ребра из <span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-24-Frame" tabindex="0" style="font-size: 100%; display: inline-block; position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>u</mi></math>" role="presentation"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.33ex" height="1.611ex" viewBox="0 -566.3 572.5 693.7" role="img" focusable="false" style="vertical-align: -0.296ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#MJMATHI-75" x="0" y="0"></use></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>u</mi></math></span></span><script type="math/tex" id="MathJax-Element-24">u</script> в <span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-25-Frame" tabindex="0" style="font-size: 100%; display: inline-block; position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>v</mi></math>" role="presentation"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.128ex" height="1.611ex" viewBox="0 -566.3 485.5 693.7" role="img" focusable="false" style="vertical-align: -0.296ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#MJMATHI-76" x="0" y="0"></use></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>v</mi></math></span></span><script type="math/tex" id="MathJax-Element-25">v</script> необходимо добавить обратное ребро из <span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-26-Frame" tabindex="0" style="font-size: 100%; display: inline-block; position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>v</mi></math>" role="presentation"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.128ex" height="1.611ex" viewBox="0 -566.3 485.5 693.7" role="img" focusable="false" style="vertical-align: -0.296ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#MJMATHI-76" x="0" y="0"></use></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>v</mi></math></span></span><script type="math/tex" id="MathJax-Element-26">v</script> в &nbsp;<span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-27-Frame" tabindex="0" style="font-size: 100%; display: inline-block; position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>u</mi></math>" role="presentation"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.33ex" height="1.611ex" viewBox="0 -566.3 572.5 693.7" role="img" focusable="false" style="vertical-align: -0.296ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#MJMATHI-75" x="0" y="0"></use></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>u</mi></math></span></span><script type="math/tex" id="MathJax-Element-27">u</script>.</p>
+<h2>Взвешенные графы</h2>
+<p>Очень часто рассматриваются графы, в которых каждому ребру приписана некоторая числовая характеристика –&nbsp;<strong>вес</strong>. Вес может означать длину дороги или стоимость проезда по данному маршруту. Соответствующие графы называются взвешенными.</p>
+<p>При представлении графа матрицей смежности вес ребра можно хранить в матрице, то есть A[i][j] в данном случае будет равно весу ребра из i в j. При этом при отсутствии ребра можно хранить специальное значение, например, None. Во многих задачах удобно при отсутствии ребра хранить очень большое число, в этом случае отсутствие ребра аналогично наличию ребра очень большой стоимости.</p>
+<p>При представлении графа списками смежности можно поступить двумя способами. Можно в списках смежности хранить пару (кортеж) из двух элементов – номер конечной вершины и вес ребра. Но в этом случае неудобно проверять наличие ребра между двумя вершинами.</p>
+<p>Другой способ – хранить списки смежности как ранее, а веса ребер хранить в отдельном ассоциативном массиве (map в C++, dict в Python), в котором ключом будет пара из двух номеров вершин (номер начальной и конечной вершины), а значением будет вес ребра между этими вершинами.</p></div><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script></body></html>

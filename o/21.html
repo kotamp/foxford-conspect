@@ -1,0 +1,54 @@
+<!doctype html>
+<html><head><link rel="stylesheet" href="../page.css"><title>6. Алгоритмы из библиотеки algorithm STL</title></head><body><h1>6. Алгоритмы из библиотеки algorithm STL</h1>
+<div class="page_content_main"><h2>Общие подходы</h2>
+<p>Заголовочный файл algorithm содержит много полезных алгоритмов.</p>
+<p>Большинство из этих алгоритмов принимают в качестве параметра два итератора, будем обозначать их first и last. В этом случае алгоритм работает с элементами контейнера от first включительно до last невключительно. Чаще всего в качестве first используется метод begin(), а в качестве last - метод end(), в этом случае алгоритм применяется ко всему контейнеру. Например,</p>
+<div class="page_code_style">
+<p>sort(a.begin(), a.end());</p>
+</div>
+<p>Используя операции "+" и "-" для итераторов можно применять алгоритмы не для всего контейнера, а для части.</p>
+<p>Можно передавать также reverse_iteraror, наиболее употребительный способ использования - это сортировка в обратном порядке при помощи:</p>
+<div class="page_code_style">
+<p>sort(a.rbegin(), e.rend());</p>
+</div><h2>Алгоритмы поиска</h2>
+<h3>find</h3>
+<p>Алгоритм <span class="page_code_style">find(first, last, val)</span> осуществляет линейный поиск значения <span class="page_code_style">val</span> от итератора <span class="page_code_style">first</span> до итератора <span class="page_code_style">last</span>. Элементы просматриваются последовательность, возвращается итератор на первый найденный элемент. Если элемент <span class="page_code_style">val</span> не будет найден, то возвращается значение итератора <span class="page_code_style">last</span>.</p>
+<h3>binary_search</h3>
+<p>Алгоритм&nbsp;<span class="page_code_style">binary_search(first, last, val)</span> осуществляет двоичный поиск значения <span class="page_code_style">val</span>. Контейнер должен быть упорядочен. Возвращается значение типа <span class="page_code_style">bool</span>, то есть <span class="page_code_style">true</span> или <span class="page_code_style">false</span> в зависимости от того, есть ли такой элемент в контейнере.</p>
+<h3>lower_bound</h3>
+<p>Алгоритм <span class="page_code_style">lower_bound(first, last, val)</span> осуществляет двоичный поиск значения <span class="page_code_style">val</span> и возвращает итератор <span class="page_code_style">res</span> на первый элемент, который не меньше, чем <span class="page_code_style">val</span>, то есть <span class="page_code_style">*res&gt;=val</span>, a <span class="page_code_style">*(res-1)&lt;val</span>. Если все элементы контейнера (начиная с <span class="page_code_style">first</span>) будут не меньше, чем <span class="page_code_style">val</span>, то будет возвращено значение <span class="page_code_style">first</span>. Если в контейнере все элементы меньше <span class="page_code_style">val</span>, то возвращается значение <span class="page_code_style">last</span>.</p>
+<h3>upper_bound</h3>
+<p>Алгоритм <span class="page_code_style">upper_bound(first, last, val)</span> осуществляет двоичный поиск значения <span class="page_code_style">val</span> и возвращает итератор <span class="page_code_style">res</span> на первый элемент, который строго больше, чем <span class="page_code_style">val</span>, то есть <span class="page_code_style">*res&gt;val</span>, a <span class="page_code_style">*(res-1)&lt;=val</span>. Если же все элементы контейнера (начиная с <span class="page_code_style">first</span>) будут больше, чем <span class="page_code_style">val</span>, то будет возвращено значение <span class="page_code_style">first</span>. Если в контейнере все элементы меньше или равны&nbsp; <span class="page_code_style">val</span>, то возвращается значение <span class="page_code_style">last</span>.</p><h2>Алгоритмы сортировки, разворота, сдвига</h2>
+<h3>sort</h3>
+<p><span class="page_code_style">sort(first, last)</span> - упорядочивает элементы контейнера по неубыванию.</p>
+<h3>stable_sort</h3>
+<p><span class="page_code_style">sort(first, last)</span> - упорядочивает элементы контейнера по неубыванию, при этом равные элементы не переставляются (так называемая "устойчивая сортировка").</p>
+<h3>reverse</h3>
+<p><span class="page_code_style">reverse(first, last)</span> - разворачивает фрагмент контейнера в обратном порядке, переставляя элементы, равноудаленные от концов.</p>
+<h3>rotate</h3>
+<p><span class="page_code_style">reverse(first, n_first, last)</span> - осуществляет циклический сдвиг фрагмента контейнера. Элемент, на который указывает итератор <span class="page_code_style">n_first</span> становится первым элементом (то есть переходит на место элемента <span class="page_code_style">first</span>), элемент <span class="page_code_style">n_first+1</span> - вторым и т.д.</p><h2>Перестановки</h2>
+<h3>next_permutation</h3>
+<p><span class="page_code_style">next_permutation(first, last)</span> - переставляет элементы так, чтобы получилась следующая в лексикографическом порядке перестановка. Можно применять не только к векторам, но и к строкам (как и многие другие алгоритмы). Метод возвращает <span class="page_code_style">true</span>, если удалось построить следующую в лексикографическом порядке перестановку. Если же первоначальная перестановка уже была максимальной в лексикографическом порядке, то метод генерирует минимальную в лексикографическом порядке перестановку и возвращает <span class="page_code_style">false</span>.</p>
+<p>Например, вывести все перестановки в лексикографическом порядке можно так:</p>
+<div class="page_code_style">
+<p>do</p>
+<p>{</p>
+<p>&nbsp;&nbsp;&nbsp; for (auto x: a)</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cout &lt;&lt; x;</p>
+<p>&nbsp;&nbsp;&nbsp; cout &lt;&lt; endl;</p>
+<p>}</p>
+<p>while(next_permutation(a.begin(), a.end());</p>
+</div>
+<h3>prev_permutation</h3>
+<p><span class="page_code_style">prev_permutation(first, last)</span> - переставляет элементы так, чтобы получилась предыдущая в лексикографическом порядке перестановка. Можно применять не только к векторам, но и к строкам (как и многие другие алгоритмы). Метод возвращает <span class="page_code_style">true</span>, если удалось построить предыдущую в лексикографическом порядке перестановку. Если же первоначальная перестановка уже была минимальной в лексикографическом порядке, то метод генерирует максимальную в лексикографическом порядке перестановку и возвращает <span class="page_code_style">false</span>.</p>
+<h3>random_shuffle</h3>
+<p><span class="page_code_style">random_shuffle(first, last)</span> - делает случайную перестановку элементов контейнера.</p><h2>Минимальные и максимальные элементы, подсчет</h2>
+<h3>min_element</h3>
+<p>Алгоритм <span class="page_code_style">min_element(first, last)</span> находит минимальный элемент в контейнере и возвращает итератор на этот элемент. Если есть несколько элементов, равных минимальному, возвращается значение первого из них.</p>
+<h3>max_element</h3>
+<p><span class="page_code_style">max_element(first, last)</span> возвращает итератор на наибольший элемент. Если есть несколько элементов, равных наибольшему - то на первый из них.</p>
+<h3>count</h3>
+<p><span class="page_code_style">count(first, last, val)</span>&nbsp; — подсчитывает сколько элементов контейнера равны значению <span class="page_code_style">val</span>.</p>
+<h3>&nbsp;</h3>
+<h1>&nbsp;</h1></div><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script></body></html>

@@ -1,0 +1,260 @@
+<!doctype html>
+<html><head><link rel="stylesheet" href="../page.css"><title>26. Создание классов Point и Vector для работы с точками и векторами (Python)</title></head><body><h1>26. Создание классов Point и Vector для работы с точками и векторами (Python)</h1>
+<div class="page_content_main"><p>Для удобства работы с геометрическими примитивами (точками и векторами) полезно хранить точку (вектор) не в виде двух отдельных переменных (координат точки), а в виде одного объекта, содержащего две переменные-координаты. Это можно сделать в рамках концепции объектно-ориентированного программирования — необходимо создать класс «Точка», объекты которого будут содержать два поля — координату x и координату y. В этом случае можно работать с объектом «точка», как с одним целым, а можно и работать с отдельными координатами точки.</p>
+<p>Самый простой способ объявить класс в языке Питон:</p>
+<div class="page_code_style">
+<p>class Point:<br>&nbsp; &nbsp; pass</p>
+</div>
+<p>После этого можно объявлять отдельные объекты класса Point следующим образом:</p>
+<div class="page_code_style">
+<p>P = Point()<br>Q = Point()</p>
+</div>
+<p>Для доступа к отдельным полям класса используется так называемая «дот-нотация», когда название поля пишется через точку после идентификатора переменной. Например, задать для точки координаты можно так:</p>
+<div class="page_code_style">
+<p>P.x = 5<br>P.y = -10</p>
+</div>
+<p>Обратите внимание, что запись вида</p>
+<div class="page_code_style">
+<p>Q = P</p>
+</div>
+<p>не создает новый объект, а просто делает Q ссылкой на тот же объект, что и P. Поэтому если изменить у объекта P значение какого-нибудь поля, то и у объекта Q это значение изменится. Для создания копии объекта P, скопировав значения всех его полей, нужно использовать функцию copy из модуля copy:</p>
+<div class="page_code_style">
+<p>import copy<br>Q = copy.copy(P)</p>
+</div>
+<p>Можно сделать так, чтобы у объекта автоматически создавались какие-нибудь поля, например, чтобы при создании точки у нее создавались поля x и y. Для этого необходимо определить конструктор объекта — метод, автоматически вызывающийся при создании объекта. Конструктором является метод, имеющий специальное название&nbsp;__init__</p>
+<p>Конструкторы и прочие методы определяются внутри класса. Например:</p>
+<div class="page_code_style">
+<p>class Point:<br>&nbsp; &nbsp; def __init__(self):<br>&nbsp; &nbsp; &nbsp; &nbsp; self.x = 0<br>&nbsp; &nbsp; &nbsp; &nbsp; self.y = 0</p>
+</div>
+<p>У конструктора и любого другого метода класса первым передаваемым параметром обязательно должен быть параметр self, который является ссылкой на объект, для которого будет вызван этот метод. При этом при вызове метода не нужно этот параметр передавать. Вот пример объявления метода dist, возвращающего расстояние от точки до начала координат:</p>
+<div class="page_code_style">
+<p>def dist(self): <br>&nbsp; &nbsp; return (self.x ** 2 + self.y ** 2) ** 0.5</p>
+</div>
+<p>Вызывается метод так:</p>
+<div class="page_code_style">
+<p>print(P.dist())</p>
+</div>
+<p>Конструктор может принимать и какие-нибудь параметры. Например, рассмотрим следующий конструктор:</p>
+<div class="page_code_style">
+<p>class Point: <br>&nbsp; &nbsp; def __init__(self, x=0, y=0): <br>&nbsp; &nbsp; &nbsp; &nbsp; self.x = 0<br>&nbsp; &nbsp; &nbsp; &nbsp; self.y = 0</p>
+</div>
+<p>Этому конструктору можно передать в качестве параметра два числа — координаты точки. Например, можно его вызывать так:</p>
+<div class="page_code_style">
+<p>P = Point(2, 6)</p>
+</div>
+<p>Если же не передавать эти два параметра, а вызвать конструктор без параметров, то значения полей x и y будут проинициализированы по умолчанию числом 0.</p>
+<p>Есть и другие стандартные методы, которые можно определить в описании класса. Например, метод&nbsp;<span class="page_code_style">__str__</span></p>
+<p>возвращает строку, являющуюся описанием объекта в том виде, в котором его удобно будет воспринимать человеку. Здесь не нужно выводить имя конструктора, можно, например, просто вернуть строку с содержимым всех полей:</p>
+<div class="page_code_style">
+<p>class Point: <br>&nbsp; &nbsp; def __str__(self): <br>&nbsp; &nbsp; &nbsp; &nbsp; return str(self.x) + ' ' + str(self.y)</p>
+</div>
+<p>Метод <em>str</em> будет вызываться, когда вызывается функция str от данного объекта, например, str(P). То есть создавая метод <em>str</em> вы даете указание Питону, как преобразовывать данный объект к типу str.</p>
+<p>Поскольку функция print использует именно функцию str для вывода объекта на экран, то определение метода <em>str</em> позволит выводить объекты на экран удобным способом: при помощи print, например, можно будет писать:</p>
+<div class="page_code_style">
+<p>print(P)</p>
+</div>
+<p>Если рассматривать точку как радиус-вектор, то хотелось бы определить для точек операцию +, чтобы точки можно было складывать столь же удобно, как и числа или строки. Например, чтобы можно было записать так:</p>
+<div class="page_code_style">
+<p>A = Point(1, 2) <br>B = Point(3, 4) <br>C = A + B</p>
+</div>
+<p>Для этого необходимо перегрузить операцию +: определить функцию, которая будет использоваться, если операция + будет вызвана для объекта класса Point. Для этого нужно определить метод <em>add</em> класса Point, у которого два параметра: неявная ссылка self на экземпляр класса, для которого она будет вызвана (это левый операнд операции +) и явная ссылка other на правый операнд:</p>
+<div class="page_code_style">
+<p>def __add__(self, other): <br>&nbsp; &nbsp; return Point(self.x + other.x, self.y + other.y)</p>
+</div>
+<p>Теперь при вызове оператора A + B Питон вызовет метод A.<em>add</em>(B), то есть вызовет указанный метод, где self = A, other = B.</p>
+<p>Аналогично можно определить и оставшиеся операции. Вот (неполный) список возможных операций, которые можно переопределить для объектов:</p>
+<table border="0">
+<tbody>
+<tr>
+<td><strong>Метод</strong></td>
+<td><strong>Пример вызова</strong></td>
+</tr>
+<tr>
+<td><strong>Операторы сравнения</strong></td>
+<td><strong>&nbsp;</strong></td>
+</tr>
+<tr>
+<td>__lt__(self, other)</td>
+<td>x &lt; y</td>
+</tr>
+<tr>
+<td>__le__(self, other)</td>
+<td>x &lt;= y</td>
+</tr>
+<tr>
+<td>__eq__(self, other)</td>
+<td>x == y</td>
+</tr>
+<tr>
+<td>__ne__(self, other)</td>
+<td>x != y</td>
+</tr>
+<tr>
+<td>__gt__(self, other)</td>
+<td>x &gt; y</td>
+</tr>
+<tr>
+<td>__ge__(self, other)</td>
+<td>x &gt;= y</td>
+</tr>
+<tr>
+<td><strong>Арифметические операторы</strong></td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td><strong>Сложение</strong></td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>__add__(self, other)</td>
+<td>
+<p>x + y</p>
+</td>
+</tr>
+<tr>
+<td>__radd__(self, other)</td>
+<td>y + x</td>
+</tr>
+<tr>
+<td>__iadd__(self, other)</td>
+<td>x += y</td>
+</tr>
+<tr>
+<td><strong>Вычитание</strong></td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>__sub__(self, other)</td>
+<td>x - y</td>
+</tr>
+<tr>
+<td>__rsub__(self, other)</td>
+<td>y - x</td>
+</tr>
+<tr>
+<td>__isub__(self, other)</td>
+<td>x -= y</td>
+</tr>
+<tr>
+<td><strong>Умножение</strong></td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>__mul__(self, other)</td>
+<td>x * y</td>
+</tr>
+<tr>
+<td>__rmul__(self, other)</td>
+<td>y * x</td>
+</tr>
+<tr>
+<td>__imul__(self, other)</td>
+<td>x *= y</td>
+</tr>
+<tr>
+<td><strong>Деление</strong></td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>__truediv__(self, other)</td>
+<td>x / y</td>
+</tr>
+<tr>
+<td>__rtruediv__(self, other)</td>
+<td>y / x</td>
+</tr>
+<tr>
+<td>__itruediv__(self, other)</td>
+<td>x /= y</td>
+</tr>
+<tr>
+<td><strong>Целочисленное деление</strong></td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>__floordiv__(self, other)</td>
+<td>x // y</td>
+</tr>
+<tr>
+<td>__rfloordiv__(self, other)</td>
+<td>y // x</td>
+</tr>
+<tr>
+<td>__ifloordiv__(self, other)</td>
+<td>x //= y</td>
+</tr>
+<tr>
+<td>__divmod__(self, other)</td>
+<td>divmod(x,y)</td>
+</tr>
+<tr>
+<td><strong>Остаток</strong></td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>__mod__(self, other)</td>
+<td>x % y</td>
+</tr>
+<tr>
+<td>__rmod__(self, other)</td>
+<td>y % x</td>
+</tr>
+<tr>
+<td>__imod__(self, other)</td>
+<td>x %=y</td>
+</tr>
+<tr>
+<td><strong>Возведение в степень</strong></td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>__pow__(self, other)</td>
+<td>x ** y</td>
+</tr>
+<tr>
+<td>__rpow__(self, other)</td>
+<td>y ** x</td>
+</tr>
+<tr>
+<td>__ipow__(self, other)</td>
+<td>x **= y</td>
+</tr>
+<tr>
+<td>&nbsp;<strong>Отрицание, модуль</strong></td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>&nbsp;__pos__(self)</td>
+<td>+x</td>
+</tr>
+<tr>
+<td>&nbsp;__neg__(self)</td>
+<td>-x</td>
+</tr>
+<tr>
+<td>&nbsp;__abs__(self)</td>
+<td>abs(x)</td>
+</tr>
+<tr>
+<td>&nbsp;<strong>Преобразование к стандартным типам</strong></td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>&nbsp;__int__(self)</td>
+<td>&nbsp;int(x)</td>
+</tr>
+<tr>
+<td>&nbsp;__float__(self)</td>
+<td>&nbsp;float(x)</td>
+</tr>
+<tr>
+<td>&nbsp;__str__(self)</td>
+<td>&nbsp;str(x)</td>
+</tr>
+<tr>
+<td>&nbsp;__round__(self, digits = 0)</td>
+<td>&nbsp;round(x, digits)</td>
+</tr>
+</tbody>
+</table></div><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script></body></html>

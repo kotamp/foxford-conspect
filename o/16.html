@@ -1,0 +1,49 @@
+<!doctype html>
+<html><head><link rel="stylesheet" href="../page.css"><title>5. Контейнер queue в STL</title></head><body><h1>5. Контейнер queue в STL</h1>
+<div class="page_content_main"><h2>Контейнер queue в STL</h2>
+<p>Очередь (англ. queue) - это структура данных, в которой доступ осуществляется только к самому раннему добавленому элементу. Новые элементы добавляются в конец очереди, а удаляются из начала очереди.</p>
+<p>В STL есть специальный контейнер queue, который реализует подобную функциональность. Для его использования необходимо подключить заголовочный файл queue:</p>
+<div class="page_code_style">
+<p>#include&lt;queue&gt;</p>
+</div>
+<p>Объявляется очередь, например, целых чисел так:</p>
+<div class="page_code_style">
+<p>queue &lt;int&gt; S;</p>
+</div>
+<p>Очередь поддерживает следущие методы:</p>
+<table border="0">
+<tbody>
+<tr>
+<td>Название метода</td>
+<td>Описание</td>
+</tr>
+<tr>
+<td>size()</td>
+<td>Возвращает размер очереди</td>
+</tr>
+<tr>
+<td>empty()</td>
+<td>Возвращает true, если очередь пуста, или false, если непуста</td>
+</tr>
+<tr>
+<td>front()</td>
+<td>Возвращает значение первого элемента в очереди</td>
+</tr>
+<tr>
+<td>back()</td>
+<td>Возвращает значение последнего элемента в очереди</td>
+</tr>
+<tr>
+<td>pop()</td>
+<td>Удаляет первый элемент из очереди, не возвращает значение</td>
+</tr>
+<tr>
+<td>push(elem)</td>
+<td>Добавляет новый элемент elem в конец очереди</td>
+</tr>
+</tbody>
+</table>
+<p>Операции pop() или top(), вызванные для пустой очереди, приведут к ошибке исполнения.</p>
+<p>Также с объектами класса queue допустимы операции =, ==, !=, &lt;, &gt;, &lt;=, &gt;=.</p>
+<p>Подробней о контейнере queue можно прочитать <a href="http://ru.cppreference.com/w/cpp/container/queue">в документации</a>.</p></div><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script></body></html>

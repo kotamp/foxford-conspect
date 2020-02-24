@@ -1,0 +1,29 @@
+<!doctype html>
+<html><head><link rel="stylesheet" href="../page.css"><title>11. Скобочные последовательности. Следующая и предыдущая последовательность</title></head><body><h1>11. Скобочные последовательности. Следующая и предыдущая последовательность</h1>
+<div class="page_content_main"><h3>Построение следующей скобочной последовательности</h3>
+<p>Общий подход к построению следующего в лексикографическом порядке комбинаторного объекта универсален для разных видов объектов:</p>
+<ol>
+<li>Найти самый правый элемент комбинаторного объекта, который можно увеличить, не модифицируя предыдущие элементы.</li>
+<li>Увеличить его на минимально возможную величину.</li>
+<li>Все последующие элементы сделать минимально возможными.</li>
+</ol>
+<p>Для построение следующей скобочной последовательности алгоритм выглядит следующим образом:</p>
+<ol>
+<li>Идти с конца подсчитывая количество открывающих скобок (op) и количество закрывающих скобок (cl), пока не будет встречена открывающая скобка, для которой значение op &lt; cl (включая эту скобку.</li>
+<li>Найденная открывающая скобка заменяется на закрывающую.</li>
+<li>Последующие элементы делаются минимально возможными в лексикографическом порядке: сначала вставляется op открывающих скобок, затем все оставшиеся скобки до конца последовательности делаются закрывающими.</li>
+</ol>
+<p>Пример реализации алгоритма. Функция возвращает true, если была построена следующая скобочная последовательность, или false, если переданная скобочная последовательность была максимальной.</p>
+
+<div class="page_code_style">
+<p>bool next(string &amp; S)<br>{<br>&nbsp;&nbsp;&nbsp; int op = 0, cl = 0, i;<br>&nbsp;&nbsp;&nbsp; for (i = S.size() - 1; i &gt;= 0; --i)<br>&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (S[i] == '(')<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ++op;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ++cl;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (S[i] == '(' &amp;&amp; op &lt; cl)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;<br>&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp; if (i == -1)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return false;<br>&nbsp;&nbsp;&nbsp; S[i] = ')';<br>&nbsp;&nbsp;&nbsp; ++i;<br>&nbsp;&nbsp;&nbsp; while (op &gt; 0)<br>&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; S[i] = '(';<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ++i;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; --op;<br>&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp; while (i &lt; S.size())<br>&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; S[i] = ')';<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ++i;<br>&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp; return true;<br>}</p>
+
+</div>
+<h3>Построение предыдущей скобочной последовательности</h3>
+<p>Идея алгоритма построения предыдущей скобочной последовательности аналогичная.</p>
+<p>1. Найдем самую правую открывающую скобку. Затем будем двигаться к началу последовательности, пока не найдем закрывающую скобку. Подсчитываем число открывающих и закрывающих скобок (op и cl).</p>
+<p>2. Заменим закрывающую скобку на открывающую. При этом значение cl уменьшается на 1.</p>
+<p>3. Следующие символы нужно сделать максимально большими в лексикографическом порядке. Поэтому будем сначала ставить закрывающие скобки, уменьшая значение cl, пока значения op и cl не сравняются. После этого будем ставить скобки парами: "()()()"</p>
+<p>Пример реализации алгоритма:</p>
+<div class="page_code_style">bool prev (string &amp; S)<br>{<br>&nbsp;&nbsp;&nbsp; int op = 0, cl = 0, i;<br>&nbsp;&nbsp;&nbsp; for (i = S.size() - 1; i &gt;= 0; --i)<br>&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (S[i] == '(')<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ++op;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ++cl;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (S[i] == '(')<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;<br>&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp; --i;<br>&nbsp;&nbsp;&nbsp; for (; i &gt;= 0; --i)<br>&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (S[i] == '(')<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ++op;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ++cl;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (S[i] == ')')<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;<br>&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp; if (i &lt; 0)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return false;<br>&nbsp;&nbsp;&nbsp; S[i] = '(';<br>&nbsp;&nbsp;&nbsp; --op;<br>&nbsp;&nbsp;&nbsp; ++i;<br>&nbsp;&nbsp;&nbsp; while (op != cl)<br>&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; S[i] = ')';<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; --cl;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ++i;<br>&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp; while (i &lt; S.size())<br>&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; S[i] = '(';<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; S[i + 1] = ')';<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; i += 2;<br>&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp; return true;<br>}</div></div><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script></body></html>

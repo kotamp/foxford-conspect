@@ -1,0 +1,23 @@
+<!doctype html>
+<html><head><link rel="stylesheet" href="../page.css"><title>4. Файловый ввод-вывод в языке C</title></head><body><h1>4. Файловый ввод-вывод в языке C</h1>
+<div class="page_content_main">
+<h1>Файловый ввод-вывод в языке C</h1>
+<p>Файловый ввод-вывод в языке C реализован при помощи функций <span class="page_code_style">fscanf</span> и <span class="page_code_style">fprintf</span>. Они полностью аналогичны функциям <span class="page_code_style">scanf</span> и <span class="page_code_style">printf</span>, только работают с файлами, а не с клавиатурой и экраном. Также у этих функций есть первый параметр - указатель на некоторый объект специального файлового типа, который сначала нужно открыть при помощи функции <span class="page_code_style">fopen</span>. Функции fopen передается два параметра. Первый параметр - С-строка с именем открываемого файла, второй параметр - строка с указанием режима открытия файла. Режим открытия файла может быть "r", когда файл открывается на чтение (read) или "w" для открытия файла на запись. После окончания работы с файлами, файлы нужно "закрыть" при помощи функции <span class="page_code_style">fclose</span>. Приведем пример программы, которая считывает два числа из файла с именем <span class="page_code_style">input.txt</span> и выводит результат в файл <span class="page_code_style">output.txt</span>.</p>
+<div>&nbsp;</div>
+<div class="page_code_style">
+<div><span>#include&lt;stdio.h&gt;<br></span></div>
+<div><span>int main()<br>{ <br>&nbsp;&nbsp;&nbsp; FILE * fin = fopen("input.txt", "r"); <br>&nbsp;&nbsp;&nbsp; FILE * fout = fopen("output.txt", "w"); <br>&nbsp;&nbsp;&nbsp; int a, b; <br>&nbsp;&nbsp;&nbsp; fscanf(fin, "%d%d", &amp;a, &amp;b); <br>&nbsp;&nbsp;&nbsp; fprintf(fout, "%d\n", a + b); <br>&nbsp;&nbsp;&nbsp; fclose(fin); <br>&nbsp;&nbsp;&nbsp; fclose(fout); <br>}</span></div>
+</div>
+<p>&nbsp;Аналогично для считывания строки до символа конца строки из файла можно использовать функцию <span class="page_code_style">fgets</span> с тремя параметрами - строка, куда записывается результат, размер строки и указатель на файл. Например:</p>
+<div class="page_code_style">
+<p>char s[101]; fgets(s, 101, fin);</p>
+</div>
+<p>Для проверки состояния файла можно использовать функцию feof с параметром - указателем на файл. Она возвращает значение 0 или 1 в зависимости от того, был ли обнаружен конец файла при чтении:</p>
+<div class="page_code_style">
+<p>if (feof(fin))</p>
+</div>
+<p>Но при использовании этой функции могут возникнуть затруднения, например, с тем, что если после последнего числа в файле стоит символ конца строки, то состояние "достигнут конец файла" произойдет не после чтения последнего числа, а после следующего чтения. Более надежный способ считать последовательность чисел из файла до конца файла — использование значения, возвращаемого функцией <span class="page_code_style">fscanf</span>:</p>
+<div class="page_code_style">
+<p>while (fscanf(fin, "%d", &amp;a) == 1)</p>
+</div></div><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script></body></html>

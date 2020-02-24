@@ -1,0 +1,61 @@
+<!doctype html>
+<html><head><link rel="stylesheet" href="../page.css"><title>5. Контейнер deque в STL</title></head><body><h1>5. Контейнер deque в STL</h1>
+<div class="page_content_main"><h2>Контейнер deque в STL</h2>
+<p>Деком (англ. deque, от double-ended queue) называется структура данных, которая позволяет добавлять элементы и в конец, и в начало, а также удалять элементы из конца и из начала. Все эти операции реализованы за O(1), то есть выполняются быстро.</p>
+<p>В STL есть специальный контейнер deque, который реализует подобную функциональность. Для его использования необходимо подключить заголовочный файл deque:</p>
+<div class="page_code_style">
+<p>#include&lt;deque&gt;</p>
+</div>
+<p>Объявляется дек, например, целых чисел так:</p>
+<div class="page_code_style">
+<p>deque &lt;int&gt; D;</p>
+</div>
+<p>Дек поддерживает следущие методы:</p>
+<table border="0">
+<tbody>
+<tr>
+<td>Название метода</td>
+<td>Описание</td>
+</tr>
+<tr>
+<td>size()</td>
+<td>Возвращает размер дека</td>
+</tr>
+<tr>
+<td>empty()</td>
+<td>Возвращает true, если дек пуста, или false, если непуст</td>
+</tr>
+<tr>
+<td>clear()</td>
+<td>Очищает дек</td>
+</tr>
+<tr>
+<td>front()</td>
+<td>Возвращает значение первого элемента в деке</td>
+</tr>
+<tr>
+<td>back()</td>
+<td>Возвращает значение последнего элемента в деке</td>
+</tr>
+<tr>
+<td>pop_front()</td>
+<td>Удаляет первый элемент из дека, не возвращает значение</td>
+</tr>
+<tr>
+<td>pop_back()</td>
+<td>Удаляет последний элемент из дека, не возвращает значение</td>
+</tr>
+<tr>
+<td>push_front(elem)</td>
+<td>Добавляет новый элемент elem в начало дека</td>
+</tr>
+<tr>
+<td>push_back(elem)</td>
+<td>Добавляет новый элемент elem в конец дека</td>
+</tr>
+</tbody>
+</table>
+<p>У дека есть много общего с векторами. Например, к элементам дека можно обращаться по индексу, при помощи [i] или метода at(i). Эти обращения выполняются быстро - реализация дека насколько хитра, что можно быстро добавлять элементы в начало и в конец, а также быстро обращаться к элементу по его номеру. У дека, как и у вектора, есть методы <a href="http://ru.cppreference.com/w/cpp/container/deque/erase">erase</a>, <a href="http://ru.cppreference.com/w/cpp/container/deque/insert">insert</a> и <a href="http://ru.cppreference.com/w/cpp/container/deque/resize">resize</a>, но они работают за линейное время.</p>
+<p>Также с объектами класса deque допустимы операции =, ==, !=, &lt;, &gt;, &lt;=, &gt;=.</p>
+<p>Подробней о контейнере deque можно прочитать <a href="http://ru.cppreference.com/w/cpp/container/deque">в документации</a>.</p></div><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script></body></html>

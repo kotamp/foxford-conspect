@@ -1,0 +1,51 @@
+<!doctype html>
+<html><head><link rel="stylesheet" href="../page.css"><title>3. Ввод в языке C++ через cin</title></head><body><h1>3. Ввод в языке C++ через cin</h1>
+<div class="page_content_main"><h2>Использование объекта cin</h2>
+<p>Для считывания данных со стандартного ввода используется объект <span class="page_code_style">cin</span>, также определенных в заголовочном файле <span class="page_code_style">iostream</span>. Его использование похоже на использование объекта <span class="page_code_style">cout</span> для вывода. Например, для считывания двух переменных a и b нужно дать команду:</p>
+<div class="page_code_style">
+<p>cin &gt;&gt; a &gt;&gt; b;</p>
+</div>
+<p>Также как и в случае с <span class="page_code_style">cout</span>, нет нужды беспокоиться о типах данных - можно считывать целые и действительные числа, символы и строки.</p><h2>Особенности считывания символов</h2>
+<p>Пусть дано время в формате HH:MM. Считать его можно следующим образом:</p>
+<div class="page_code_style">
+<p>int h, m;<br>char c;<br>cin &gt;&gt; h &gt;&gt; c &gt;&gt; m;</p>
+</div>
+<p>То есть сначала считывается число, затем - символ, затем - число.</p>
+<p>При этом при считывании символа пропускаются пробельные символы (пробелы и концы строк) и считывается следующий непробельный символ. Например, если при запуске приведенного выше кода ввести "12 34", то переменная h станет равна 12, переменная с — '3', а переменная m — 4.</p>
+<p>Если установить манипулятор <span class="page_code_style">noskipws</span>:</p>
+<div class="page_code_style">
+<p>cin &gt;&gt; noskipws;</p>
+</div>
+<p>то при считывании символов пробельные символы не будут пропускаться. Для восстановления режима пропуска пробельных символов используется манипулятор <span class="page_code_style">skipws</span>:</p>
+<div class="page_code_style">
+<p>cin &gt;&gt; noskipws;</p>
+</div><h2>Особенности считывания строк</h2>
+<p>Считывание строк при помощи <span class="page_code_style">cin &gt;&gt; s</span>, где s - объект класса string или C-строка приведет к считыванию строки из непробельных символов, при этом пробельные символы пропускаются.Использовать манипулятор <span class="page_code_style">noskipws</span> при чтении строк не следует.</p>
+<p>Строку целиком до конца строки, вместе с пробельными символами можно считать следующим образом:</p>
+<div class="page_code_style">
+<p>getline(cin, s);</p>
+</div>
+<p>Отметим следующую особенность такого считывания. Пусть входные данные заданы так - сначала число строк n, затем - n строк, возможно, содержащие пробелы. Требуется считать данные строки и сохранить их в массиве строк.</p>
+<p>Правильное решение будет таким:</p>
+<div class="page_code_style">
+<p>int n;<br>string s,&nbsp; A[100];<br>cin &gt;&gt; n;<br>getline(cin, s);<br>for (int i = 0; i &lt; n; ++i)<br>&nbsp;&nbsp;&nbsp; getline(cin, A[i]);</p>
+</div>
+<p>Здесь нужно обратить внимание на "лишний" вызов <span class="page_code_style">getline</span> после считывания числа n. Дело в том, что <span class="page_code_style">cin &gt;&gt; n</span> не считывает конец строки из потока, поэтому последующий вызов <span class="page_code_style">getline</span> вернет пустую строку (но зато считает конец строки), поэтому нужно сделать один "холостой" вызов <span class="page_code_style">getline</span> перед считыванием всех остальных строк.</p><h2>Значение, возвращаемое при считывании</h2>
+<p>Для проверки успешности считывания можно преобразовать значение, возвращаемое операцией считывания к типу <span class="page_code_style">bool</span>. Например, следующим образом:</p>
+<div class="page_code_style">
+<p>bool is_correct;<br>int a;<br>is_correct = (cin &gt;&gt; a);</p>
+</div>
+<p>Если значение переменной <span class="page_code_style">is_correct</span> будет <span class="page_code_style">true</span>, то считывание было успешно, иначе - нет.</p>
+<p>Вместо записи результата в логическую переменную, можно непосредственно использовать его, например, в условной инструкции. Вот так, например, можно проверять, что на вход программе подано два числа через двоеточие:</p>
+<div class="page_code_style">
+<p>int h, m;<br>char c;<br>if (cin &gt;&gt; noskipws &gt;&gt; h &gt;&gt; c &gt;&gt; m)<br>{<br>&nbsp;&nbsp;&nbsp; if (c == ':') …<br>}</p>
+</div>
+<p>Похожее использование - чтение текста "по словам", с обработкой каждого слова:</p>
+<div class="page_code_style">
+<p>string word;<br>while (cin &gt;&gt; word)<br>{<br>&nbsp;&nbsp; // Обработать слово в переменной word<br>}</p>
+</div>
+<p>Или считывание текста по строкам:</p>
+<div class="page_code_style">
+<p>string line;<br>while (getline(cin, s))<br>{<br>&nbsp;&nbsp;&nbsp; // Обработать строку в переменной line<br>}</p>
+</div></div><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script></body></html>

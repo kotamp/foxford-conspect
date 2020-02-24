@@ -1,0 +1,78 @@
+html {
+    font-size: 16px;
+    font-family: sans-serif
+}
+
+body {
+    padding-bottom: 100px;
+    margin: 0 auto;
+    width: 90vw
+}
+
+li {
+    margin: 6px
+}
+
+a {
+    color: #000;
+    text-decoration-style: dashed;
+    text-decoration-color: #aaa
+}
+
+li,p,table {
+    font-size: 2em
+}
+
+.MathJax_SVG svg {
+    display: none
+}
+
+.page_code_style {
+    border-radius: 5px;
+    padding: 5px 20px;
+    background-color: #eee;
+    font-family: monospace;
+    font-size: 1.3rem
+}
+
+.page_code_style p {
+    margin: 0
+}
+
+div.page_code_style {
+    padding: 30px
+}
+
+span.page_code_style {
+    padding: 5px 10px
+}
+
+td {
+    padding: 20px
+}
+
+@media only screen and (min-width:1024px) {
+    body {
+        max-width: 1024px
+    }
+}
+
+ul {
+    list-style: none
+}
+
+h1 {
+    font-size: 3rem
+}
+
+h2 {
+    font-size: 2.5rem
+}
+
+h3 {
+    font-size: 2.3rem
+}
+
+a,li,p {
+    font-size: 1.3rem
+}

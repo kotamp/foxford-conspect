@@ -1,0 +1,8 @@
+<!doctype html>
+<html><head><link rel="stylesheet" href="../page.css"><title>8. Контейнер multimap STL</title></head><body><h1>8. Контейнер multimap STL</h1>
+<div class="page_content_main"><p>Контейнер <span class="page_code_style">multimap</span> хранит пары элементов (ключ, значение), при этом могут существовать элементы с повторяющимися значениями ключей. Этот контейнер объявлен в заголовочном файле map и используется крайне редко.</p>
+<p>У этого элемента нет возможности обращаться к элементам по индексам при помощи операции <span class="page_code_style">[]</span> или метода <span class="page_code_style">at</span>, поскольку непонятно, какое значение они должны возвращать при совпадении ключей.</p>
+<p>Для добавления элементов в контейнер <span class="page_code_style">multimap</span> используется метод <span class="page_code_style">insert</span>, аргументом которого является пара (ключ, значение). Тем самым можно добавлять значения, имеющие одинаковые ключи, путем многократного <span class="page_code_style">insert</span>.</p>
+<p>Для поиска элементов в контейнере можно использовать методы <span class="page_code_style">find</span>, <span class="page_code_style">lower_bound</span>, <span class="page_code_style">upper_bound</span>, для перебора элементов можно использовать итераторы или <span class="page_code_style">range-based</span> циклы.</p>
+</div><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script></body></html>

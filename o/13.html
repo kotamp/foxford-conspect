@@ -1,0 +1,28 @@
+<!doctype html>
+<html><head><link rel="stylesheet" href="../page.css"><title>4. Файловый ввод-вывод в C++</title></head><body><h1>4. Файловый ввод-вывод в C++</h1>
+<div class="page_content_main"><h1>Файловый ввод-вывод в языке C++</h1>
+<p>В языке C++ ввод-вывод осуществляется через объекты классов <span class="page_code_style">ifstream</span> (для чтения данных) и <span class="page_code_style">ofstream</span> (для вывода данных). Эти классы объявлены в заголовочном файле <span class="page_code_style">fstream</span>.</p>
+<p>При создании этих объектов нужно передать в конструктор один параметр - имя файла.</p>
+<p>После этого с этими объектами можно работать точно так же, как с объектами <span class="page_code_style">cin</span> и <span class="page_code_style">сout</span>.</p>
+<p>После окончания работы с файлами, файлы нужно "закрыть" эти объекты, вызвав для них метод <span class="page_code_style">close()</span>.</p>
+<p>Приведем пример программы, которая считывает два числа из файла с именем <span class="page_code_style">input.txt</span> и выводит результат в файл <span class="page_code_style">output.txt</span>.</p>
+<div>&nbsp;</div>
+<div class="page_code_style">
+<div><span>#include&lt;fstream&gt;<br>using namespace std;<br></span></div>
+<div><span>int main()<br>{<br>&nbsp;&nbsp;&nbsp; ifstream fin("input.txt"); <br>&nbsp;&nbsp;&nbsp; ofstream fout("output.txt"); <br>&nbsp;&nbsp;&nbsp; int a, b; <br>&nbsp;&nbsp;&nbsp; fin &gt;&gt; a &gt;&gt; b;<br>&nbsp;&nbsp;&nbsp; fout &lt;&lt; a + b &lt;&lt; endl;<br>&nbsp;&nbsp;&nbsp; fin.close();<br>&nbsp;&nbsp;&nbsp; fout.close();<br>}</span></div>
+</div>
+<p>&nbsp;Аналогично для считывания строки до символа конца строки из файла можно использовать функцию <span class="page_code_style">getline</span> с двумя параметрами - файловый объект, из которого читаются данные и строка, куда записывается результат. Например:</p>
+<div class="page_code_style">
+<p>string s;</p>
+<p>getline(fin, s);</p>
+</div>
+<p>Для проверки состояния файла можно использовать метод файла <span class="page_code_style">eof()</span>. Он возвращает значение <span class="page_code_style">true</span> или <span class="page_code_style">false</span> в зависимости от того, был ли обнаружен конец файла при чтении:</p>
+<div class="page_code_style">
+<p>if (fin.eof())</p>
+</div>
+<p>Но при использовании этого метода могут возникнуть затруднения, например, с тем, что если после последнего числа в файле стоит символ конца строки, то состояние "достигнут конец файла" произойдет не после чтения последнего числа, а после следующего чтения.</p>
+<p>Более надежный (и простой!) способ считать последовательность чисел из файла до конца файла — использование значения, возвращаемого при считывании:</p>
+<div class="page_code_style">
+<p>while (fin &gt;&gt; d)</p>
+</div></div><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script></body></html>

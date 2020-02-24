@@ -1,0 +1,111 @@
+<!doctype html>
+<html><head><link rel="stylesheet" href="../page.css"><title>4. Работа со строками в C++ (класс string)</title></head><body><h1>4. Работа со строками в C++ (класс string)</h1>
+<div class="page_content_main"><h1>Основы работы со строками в C++</h1>
+<p>В языке C++ для удобной работы со строками есть класс string, для использования которого необходимо подключить заголовочный файл string.</p>
+<p>Строки можно объявлять и одновременно присваивать им значения:</p>
+<div class="page_code_style">
+<p>string S1, S2 = "Hello";</p>
+</div>
+<p>Строка S1 будет пустой, строка S2 будет состоять из 5 символов.</p>
+<p>К отдельным символам строки можно обращаться по индексу, как к элементам массива или C-строк. Например <span class="page_code_style">S[0]</span> - это первый символ строки.</p>
+<p>Для того, чтобы узнать длину строки можно использовать метод size() строки. Например, последний символ строки S это <span class="page_code_style">S[S.size() - 1</span>].</p><h2>Конструкторы строк</h2>
+<p>Строки можно создавать с использованием следующих конструкторов:<br> <code>string()</code> - конструктор по умолчанию (без параметров) создает пустую строку.<br> <code>string(string &amp; S)</code> - копия строки <code>S</code><br> <code>string(</code><code><code>size_t </code>n, char c)</code> - повторение символа <code>c</code> заданное число <code>n</code> раз.<br> <code>string(size_t c)</code> - строка из одного символа <code>c</code>.<br> <code>string(string &amp; S, </code><code><code>size_t</code> start, </code><code><code>size_t </code>len)</code> - строка, содержащая не более, чем <code>len</code> символов данной строки <code>S</code>, начиная с символа номер <code>start</code>.</p>
+<p>Конструкторы можно вызывать явно, например, так:</p>
+<pre>&nbsp;</pre>
+<div class="page_code_style">
+<p>S += string(10, 'z');</p>
+</div>
+<p>В этом примере явно вызывается конструктор <code>string</code> для создания строки, состоящей из 10 символов <code>'z'</code>.</p>
+<p>Неявно конструктор вызывается при объявлении строки с указанием дополнительных параметров. Например, так:</p>
+<div class="page_code_style">
+<p>string S(10, 'z');</p>
+</div>
+<p>Подробней о конструкторах для строк читайте <a href="http://www.cppreference.com/wiki/ru/string/string_constructors">здесь</a>.</p>
+<h2>&nbsp;</h2><h2>Ввод-вывод строк</h2>
+<p>Строка выводится точно так же, как и числовые значения:</p>
+<div class="page_code_style">
+<p>cout &lt;&lt; S;</p>
+</div>
+<p>Для считывания строки можно использовать операцию "&gt;&gt;" для объекта cin:</p>
+<div class="page_code_style">
+<p>cin &gt;&gt; S;</p>
+</div>
+<p>В этом случае считывается строка из непробельных символов, пропуская пробелы и концы строк. Это удобно для того, чтобы разбивать текст на слова, или чтобы читать данные до конца файла при помощи <span class="page_code_style">while (cin &gt;&gt; S)</span>.</p>
+<p>Можно считывать строки до появления символа конца строки при помощи функции getline. Сам символ конца строки считывается из входного потока, но к строке не добавляется:</p>
+<div class="page_code_style">
+<p>getline(cin S);</p>
+</div><h2>Арифметические операторы</h2>
+<p>Со строками можно выполнять следующие арифметические операции:<br> <code>=</code> - присваивание значения.<br> <code>+=</code> - добавление в конец строки другой строки или символа.<br> <code>+</code> - конкатенация двух строк, конкатенация строки и символа.<br> <code>==</code>, <code>!=</code> - посимвольное сравнение.<br> <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code> - лексикографическое сравнение.</p>
+<p>То есть можно скопировать содержимое одной строки в другую при помощи операции S1 = S2, сравнить две строки на равенство при помощи S1 == S2, сравнить строки в лексикографическом порядке при помощи S1 &lt; S2, или сделать сложение (конкатенацию) двух строк в виде S = S1 + S2.</p>
+<p>Подробней об операторах для строк читайте <a href="http://www.cppreference.com/wiki/ru/string/string_operators">здесь</a>.</p><h2>Методы строк</h2>
+<p>У строк есть разные методы, многие из них можно использовать несколькими разными способами (с разным набором параметров).</p>
+<p>Рассмотрим эти методы подробней.</p>
+<h3>size</h3>
+<p>Метод size() возращает длину длину строки. Возвращаемое значение является беззнаковым типом (как и во всех случаях, когда функция возращает значение, равное длине строке или индексу элемента - эти значения беззнаковые). Поэтому нужно аккуратно выполнять операцию вычитания из значения, которое возвращает size(). Например, ошибочным будет запись цикла, перебирающего все символы строки, кроме последнего, в виде for (int i = 0; i &lt; S.size() - 1; ++i).</p>
+<p>Кроме того, у строк есть метод length(), который также возвращает длину строки.</p>
+<p>Подробней о методе <a class="wikilink1" title="ru:string:size" href="http://www.cppreference.com/wiki/ru/string/size">size</a>.</p>
+<h3>resize</h3>
+<p><span class="page_code_style">S.resize(n)</span> - Изменяет длину строки, новая длина строки становится равна n. При этом строка может как уменьшится, так и увеличиться. Если вызвать в виде <span class="page_code_style">S.resize(n, c)</span>, где c - символ, то при увеличении длины строки добавляемые символы будут равны c.</p>
+<p>Подробней о методе <a class="wikilink1" title="ru:string:resize" href="http://www.cppreference.com/wiki/ru/string/resize">resize</a>.</p>
+<h3>clear</h3>
+<p><span class="page_code_style">S.clear()</span> - очищает строчку, строка становится пустой.</p>
+<p>Подробней о методе <a class="wikilink1" title="ru:string:clear" href="http://www.cppreference.com/wiki/ru/string/clear">clear</a>.</p>
+<h3>empty</h3>
+<p><span class="page_code_style">S.empty()</span> - возвращает true, если строка пуста, false - если непуста.</p>
+<p>Подробней о методе <a class="wikilink1" title="ru:string:empty" href="http://www.cppreference.com/wiki/ru/string/empty">empty</a>.</p>
+<h3>push_back</h3>
+<p><span class="page_code_style">S.push_back(c)</span> - добавляет в конец строки символ c, вызывается с одним параметром типа char.</p>
+<p>Подробней о методе <a class="wikilink1" title="ru:string:push_back" href="http://www.cppreference.com/wiki/ru/string/push_back">push_back</a>.</p>
+<h3>append</h3>
+<p>Добавляет в конец строки несколько символов, другую строку или фрагмент другой строки. Имеет много способов вызова.</p>
+<p><span class="page_code_style">S.append(n, c)</span> - добавляет в конец строки n одинаковых символов, равных с. n имеет целочисленный тип, c - char.</p>
+<p><span class="page_code_style">S.append(T)</span> - добавляет в конец строки S содержимое строки T. T может быть объектом класса string или C-строкой.</p>
+<p><span class="page_code_style">S.append(T, pos, count)</span> - добавляет в конец строки S символы строки T начиная с символа с индексом pos количеством count.</p>
+<p>Подробней о методе <a class="wikilink1" title="ru:string:append" href="http://www.cppreference.com/wiki/ru/string/append">append</a>.</p>
+<h3>erase</h3>
+<p><span class="page_code_style">S.erase(pos)</span> - удаляет из строки S&nbsp; с символа с индексом pos и до конца строки.</p>
+<p><span class="page_code_style">S.erase(pos, count)</span> - удаляет из строки S&nbsp; с символа с индексом pos количеством count или до конца строки, если pos + count &gt; S.size().</p>
+<p>Подробней о методе <a class="wikilink1" title="ru:string:erase" href="http://www.cppreference.com/wiki/ru/string/erase">erase</a>.</p>
+<h3>insert</h3>
+<p>Вставляет в середину строки несколько символов, другую строку или фрагмент другой строки. Способы вызова аналогичны способам вызова метода append, только первым параметром является значение i - позиция, в которую вставляются символы. Первый вставленный символ будет иметь индекс i, а все символы, которые ранее имели индекс i и более сдвигаются вправо.</p>
+<p><span class="page_code_style">S.insert(i, n, c)</span> - вставить n одинаковых символов, равных с. n имеет целочисленный тип, c - char.</p>
+<p><span class="page_code_style">S.insert(i, T)</span> - вставить содержимое строки T. T может быть объектом класса string или C-строкой.</p>
+<p><span class="page_code_style">S.insert(i, T, pos, count)</span> - вставить символы строки T начиная с символа с индексом pos количеством count.</p>
+<p>Подробней о методе <a class="wikilink1" title="ru:string:insert" href="http://www.cppreference.com/wiki/ru/string/insert">insert</a>.</p>
+<h3>substr</h3>
+<p><span class="page_code_style">S.substr(pos)</span> - возвращает подстроку данной строки начиная с символа с индексом pos и до конца строки.</p>
+<p><span class="page_code_style">S.substr(pos, count)</span> - возвращает подстроку данной строки начиная с символа с индексом pos количеством count или до конца строки, если pos + count &gt; S.size().</p>
+<p>Подробней о методе <a class="wikilink1" title="ru:string:substr" href="http://www.cppreference.com/wiki/ru/string/substr">substr</a>.</p>
+<h3>replace</h3>
+<p>Заменяет фрагмент строки на несколько равных символов, другую строку или фрагмент другой строки. Способы вызова аналогичны способам вызова метода append, только первыми двумя параметрами являются два числа: pos и count. Из данной строки удаляется count символов, начиная с символа pos, и на их место вставляются новые символы.</p>
+<p><span class="page_code_style">S.replace(pos, count, n, c)</span> - вставить n одинаковых символов, равных с. n имеет целочисленный тип, c - char.</p>
+<p><span class="page_code_style">S.replace(pos, count, T)</span> - вставить содержимое строки T. T может быть объектом класса string или C-строкой.</p>
+<p><span class="page_code_style">S.replace(pos, count, T, pos2, count2)</span> - вставить символы строки T начиная с символа с индексом pos количеством count.</p>
+<p>Подробней о методе <a class="wikilink1" title="ru:string:replace" href="http://www.cppreference.com/wiki/ru/string/replace">replace</a>.</p>
+<h3>find</h3>
+<p>Ищет в данной строке первое вхождение другой строки str. Возвращается номер первого символа, начиная с которого далее идет подстрока, равная строке str. Если эта строка не найдена, то возвращается константа string::npos (которая равна -1, но при этом является беззнаковой, то есть на самом деле является большим безннаковым положительным числом).</p>
+<p>Если задано значение pos, то поиск начинается с позиции pos, то есть возращаемое значение будет не меньше, чем pos. Если значение pos не указано, то считается, что оно равно 0 - поиск осуществляется с начала строки.</p>
+<p><span class="page_code_style">S.find(str, pos = 0)</span> - искать первое входение строки str начиная с позиции pos. Если pos не задано - то начиная с начала строки S.</p>
+<p><span class="page_code_style">S.find(str, pos, n)</span> - искать в данной строке подстроку, равную первым n символам строки str. Значение pos должно быть задано.</p>
+<p>Подробней о методе <a class="wikilink1" title="ru:string:find" href="http://www.cppreference.com/wiki/ru/string/find">find</a>.</p>
+<h3>rfind</h3>
+<p>Ищет последнее вхождение подстроки ("правый" поиск). Способы вызова аналогичны способам вызова метода find.</p>
+<p>Подробней о методе <a class="wikilink1" title="ru:string:rfind" href="http://www.cppreference.com/wiki/ru/string/rfind">rfind</a>.</p>
+<h3>find_first_of</h3>
+<p>Ищет в данной строке первое появление любого из символов данной строки str. Возвращается номер этого символа или значение string::npos.</p>
+<p>Если задано значение pos, то поиск начинается с позиции pos, то есть возращаемое значение будет не меньше, чем pos. Если значение pos не указано, то считается, что оно равно 0 - поиск осуществляется с начала строки.</p>
+<p><span class="page_code_style">S.find_first_of(str, pos = 0)</span> - искать первое входение любого символа строки str начиная с позиции pos. Если pos не задано - то начиная с начала строки S.</p>
+<p>Подробней о методе <a class="wikilink1" title="ru:string:find_first_of" href="http://www.cppreference.com/wiki/ru/string/find_first_of">find_first_of</a>.</p>
+<h3>find_last_of</h3>
+<p>Ищет в данной строке последнее появление любого из символов данной строки str. Способы вызова и возвращаемое значение аналогичны методу find_first_of.</p>
+<p>Подробней о методе <a class="wikilink1" title="ru:string:find_last_of" href="http://www.cppreference.com/wiki/ru/string/find_last_of">find_last_of</a>.</p>
+<h3>find_first_not_of</h3>
+<p>Ищет в данной строке первое появление символа, отличного от символов строки str. Способы вызова и возвращаемое значение аналогичны методу find_first_of.</p>
+<p>Подробней о методе <a class="wikilink1" title="ru:string:find_first_not_of" href="http://www.cppreference.com/wiki/ru/string/find_first_not_of">find_first_not_of</a>.</p>
+<h3>find_last_not_of</h3>
+<p>Ищет в данной строке последнее появление символа, отличного от символов строки str. Способы вызова и возвращаемое значение аналогичны методу find_first_of.</p>
+<p>Подробней о методе <a class="wikilink1" title="ru:string:find_last_not_of" href="http://www.cppreference.com/wiki/ru/string/find_last_not_of">find_last_not_of</a>.</p>
+<h3>c_str</h3>
+<p>Возвращает указать на область памяти, в которой хранятся символы строки, возвращает значение типа char*. Возвращаемое значение можно рассматривать как C-строку и использовать в функциях, которые должны получать на вход C-строку.</p>
+<p>Подробней о методе <a class="wikilink1" title="ru:string:c_str" href="http://www.cppreference.com/wiki/ru/string/c_str">c_str</a>.</p></div><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script></body></html>

@@ -1,0 +1,89 @@
+<!doctype html>
+<html><head><link rel="stylesheet" href="../page.css"><title>3. Вывод в языке C++ через cout</title></head><body><h1>3. Вывод в языке C++ через cout</h1>
+<div class="page_content_main"><h1>Использование объекта cout</h1>
+<p>Для стандартного вывода (вывода на экран) в языке C++ используется объект <span class="page_code_style">cout</span> и операторы "&lt;&lt;". Например, для вывода значения переменной a можно написать:</p>
+<div class="page_code_style">
+<p>cout &lt;&lt; a;</p>
+</div>
+<p>Для вывода значений переменных a и b через пробел так:</p>
+<div class="page_code_style">
+<p>cout &lt;&lt; a &lt;&lt; " " &lt;&lt; b;</p>
+</div>
+<p>В этом примере мы даем команду сначала вывести значение переменной a, затем строку из одного пробела, затем вывести значение переменной b.</p>
+<p>Для перехода на следующую строку нужно либо вывести специальный символ '\n', либо использовать объект <span class="page_code_style">endl</span>. Приведем примеры использования обоих способов для вывода значений переменных в отдельных строках:</p>
+<div class="page_code_style">
+<p>cout &lt;&lt; a &lt;&lt; "\n" &lt;&lt; b &lt;&lt; endl;</p>
+</div>
+<p>Через <span class="page_code_style">cout</span> можно выводить все стандартные типы данных - целые и действительные числа, символы,&nbsp; строки (как C-строки, так и объекты <span class="page_code_style">string</span>), заботиться о задании типов данных при этом не нужно, компилятор автоматически распознает необходимые типы.</p>
+<p>Для использования стандартного ввода-вывода в языке C++ необходимо подключить заголовочный файл <span class="page_code_style">iostream</span>:</p>
+<div class="page_code_style">
+<p>#include&lt;iostream&gt;</p>
+</div><h1>Задание ширины поля вывода</h1>
+<p>Есть два способа управления выводом - через вызовы метода объекта cout (например, <span class="page_code_style">cout.width(20)</span>) или при помощи "манипуляторов" (<span class="page_code_style">cout &lt;&lt; setw(10)</span>).</p>
+<p>Второй способ удобней, поэтому рассмотрим его. Для использования манипуляторов необходимо подключить заголовочный файл <span class="page_code_style">iomanip</span>:</p>
+<div class="page_code_style">
+<p>#include&lt;iomanip&gt;</p>
+</div>
+<p>Для задания ширины поля вывода одного значения используется манипулятор setw с одним параметром - шириной поля вывода. Например:</p>
+<div class="page_code_style">
+<p>cout &lt;&lt; setw(10) &lt;&lt; a;</p>
+</div>
+<p>выведет значение переменной a в поле шириной 10 символов. Аналогично правилам вывода в языке C, по умолчанию осуществляется выравнивание выводимого значения по правому краю (перед выводимым значением добавляются пробелы), если же число содержит больше символов, чем ширина поля, то будут выведены все символы.</p>
+<p>Манипулятор <span class="page_code_style">setw</span> влияет только на значение ширины поля вывода для следующего выводимого значения, если нужно задать значение ширины поля вывода для двух чисел, то это нужно делать перед выводом каждого значения.</p>
+<p>Манипулятор <span class="page_code_style">setfill</span> с одним параметром типа char позволяет задать символ-"заполнитель", который будет использоваться вместо пробела для заполнения поля. Например, вывести время в формате HH:MM (ровно по две цифры для вывода часов и минут) можно следующим образом:</p>
+<div class="page_code_style">
+<p>cout &lt;&lt; setfill('0') &lt;&lt; setw(2) &lt;&lt; h &lt;&lt; ":" &lt;&lt; setw(2) &lt;&lt; m &lt;&lt; endl;</p>
+</div>
+<p>Заметим, что манипулятор <span class="page_code_style">setfill</span> действует постоянно (до следующего вызова <span class="page_code_style">setfill</span>), не нужно устанавливать его перед выводом каждого значения.</p>
+<p>Также как и в языке C можно задавать тип выравнивания внутри поля. Выравнивание бывает левым, правым и внутренним. Внутреннее выравнивание означает, что сначала выводится знак числа (если число отрицательное), затем - пробелы, затем - цифры числа. Для задания выравнивания используются манипуляторы <span class="page_code_style">left</span>, <span class="page_code_style">right</span>, <span class="page_code_style">internal</span>.</p>
+<p>Примеры использования различных типов выравнивания:</p>
+<table border="0">
+<tbody>
+<tr>
+<td>Пример кода</td>
+<td>Вывод программы</td>
+</tr>
+<tr>
+<td>
+<div>
+<div class="page_code_style"><span style="color: #000000; background-color: #ffffff;">cout &lt;&lt; left &lt;&lt; setw(7) &lt;&lt; </span>-123 &lt;&lt; "*" &lt;&lt; endl;</div>
+</div>
+</td>
+<td>
+<div class="page_code_style"><span><span style="color: #000000; background-color: #ffffff;"><span class="page_code_style">-123&nbsp;&nbsp;&nbsp;*</span></span><br></span></div>
+</td>
+</tr>
+<tr>
+<td>
+<div>
+<div class="page_code_style"><span style="color: #000000; background-color: #ffffff;">cout &lt;&lt; right &lt;&lt; setw(7) &lt;&lt; </span>-123 &lt;&lt; "*" &lt;&lt; endl;</div>
+</div>
+</td>
+<td>
+<div class="page_code_style"><span><span style="color: #000000; background-color: #ffffff;"><span class="page_code_style">&nbsp;&nbsp;&nbsp;-123*</span></span></span></div>
+</td>
+</tr>
+<tr>
+<td>
+<div>
+<div class="page_code_style"><span style="color: #000000; background-color: #ffffff;">cout &lt;&lt; internal &lt;&lt; setw(7) &lt;&lt; </span>-123 &lt;&lt; "*" &lt;&lt; endl;</div>
+</div>
+</td>
+<td>
+<div class="page_code_style"><span><span style="color: #000000; background-color: #ffffff;"><span class="page_code_style">-&nbsp;&nbsp;&nbsp;123*</span></span></span></div>
+</td>
+</tr>
+</tbody>
+</table><h1>Вывод действительных чисел</h1>
+<p>Есть два способа вывода действительных чисел - с фиксированной точкой (соответствует форматной строке "%f" функции <span class="page_code_style">printf</span>) и с плавающий точкой (соответствует "%e"). Для переключения режима вывода действительных чисел в формат с фиксированной точкой используется манипулятор fixed, для вывода с плавающей точкой - манипулятор scientific.</p>
+<p>По умолчанию числа выводятся с точностью в 6 знаков после точки, это значение можно изменить при помощи манипулятора <span class="page_code_style">setprecision</span> с параметром - шириной поля вывода.</p>
+<p>Например:</p>
+<div class="page_code_style">
+<p>cout &lt;&lt; scientific &lt;&lt; setprecision(15) &lt;&lt; x &lt;&lt; endl;</p>
+</div>
+<p>Данные манипуляторы после включения действуют постоянно, до следующего задания значения, то есть их не нужно задавать перед выводом каждой переменной.</p>
+<p>По умолчанию (если не задать явно манипулятор <span class="page_code_style">fixed</span> или <span class="page_code_style">scientific</span>) число может выводиться или с плавающей точкой, или с фиксированной, в зависимости от величины числа. Если был установлен один из манипуляторов <span class="page_code_style">fixed</span> или <span class="page_code_style">scientific</span>, то вернуть "автоматический" выбор формы представления числа можно при помощи манипулятора</p>
+<div class="page_code_style">
+<p>cout &lt;&lt; resetiosflags(ios_base::floatfield);</p>
+</div></div><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script></body></html>

@@ -1,0 +1,418 @@
+<!doctype html>
+<html><head><link rel="stylesheet" href="../page.css"><title>13. Двумерное динамическое программирование: игры</title></head><body><h1>13. Двумерное динамическое программирование: игры</h1>
+<div class="page_content_main"><p><span style="color: #333333;">Рассмотрим игру «Ферзя в угол» для двух игроков. В левом верхнем углу доски размером <span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-360-Frame" tabindex="0" style="font-size: 100%; display: inline-block; position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>n</mi><mo>&amp;#x00D7;</mo><mi>m</mi></math>" role="presentation"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="6.276ex" height="1.611ex" viewBox="0 -566.3 2701.9 693.7" role="img" focusable="false" style="vertical-align: -0.296ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#MJMATHI-6E" x="0" y="0"></use><use xlink:href="#MJMAIN-D7" x="822" y="0"></use><use xlink:href="#MJMATHI-6D" x="1823" y="0"></use></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi><mo>×</mo><mi>m</mi></math></span></span><script type="math/tex" id="MathJax-Element-360">n\times m</script> находится ферзь, который может двигаться только вправо-вниз. Игроки по очереди двигают ферзя, то есть за один ход игрок может переместить ферзя либо по вертикали вниз, либо по горизонтали вправо, либо во диагонали вправо-вниз. Игрок, который не может сделать ход — проигрывает, иными словами, выигрывает игрок, который поставит ферзя в правый нижний угол. Необходимо определить, какой из игроков может выиграть в этой игре независимо от ходов другого игрока.</span></p>
+<p>Эту задачу также можно решить при помощи динамического программирования. Будем заполнять доску знаками «+» и «--». Знак «+» будет означать, что данная клетка является выигрышной для ходящего с неё игрока (то есть если ферзь стоит в этой клетке, то игрок, который делает ход, может всегда выиграть), а знак «--» означает, что он проигрывает. Клетки последней строки, последнего столбца и диагонали, ведущей из правого нижнего угла необходимо отметить, как «+», так как если ферзь стоит в этой клетке, то ходящий игрок может выиграть одним ходом:</p>
+<table border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">&nbsp;</td>
+<td valign="top" width="52">&nbsp;</td>
+<td valign="top" width="52">&nbsp;</td>
+<td valign="top" width="52">&nbsp;</td>
+<td valign="top" width="53">
+<p align="center">+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="52">&nbsp;</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">&nbsp;</td>
+<td valign="top" width="52">&nbsp;</td>
+<td valign="top" width="52">&nbsp;</td>
+<td valign="top" width="53">
+<p align="center">+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="52">&nbsp;</td>
+<td valign="top" width="52">&nbsp;</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">&nbsp;</td>
+<td valign="top" width="52">&nbsp;</td>
+<td valign="top" width="53">
+<p align="center">+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="52">&nbsp;</td>
+<td valign="top" width="52">&nbsp;</td>
+<td valign="top" width="52">&nbsp;</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">&nbsp;</td>
+<td valign="top" width="53">
+<p align="center">+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="52">&nbsp;</td>
+<td valign="top" width="52">&nbsp;</td>
+<td valign="top" width="52">&nbsp;</td>
+<td valign="top" width="52">&nbsp;</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="53">
+<p align="center">+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="53">
+<p align="center">--</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Но в правом нижнем углу необходимо поставить знак «--» — если ферзь стоит в углу, то тот игрок, которых должен делать ход, уже проиграл.</p>
+<p>Теперь рассмотрим две клетки, из которых можно пойти только в те клетки, в которых записан знак «+». В этих клетках нужно записать знак «--» — если ферзь стоит в этих клетках, то какой бы ход не сделал ходящий игрок, ферзь окажется в клетке, в которой стоит знак «+», то есть выигрывает ходящий игрок. Значит, тот, кто сейчас ходит — всегда проигрывает.</p>
+<table border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">&nbsp;</td>
+<td valign="top" width="52">&nbsp;</td>
+<td valign="top" width="52">&nbsp;</td>
+<td valign="top" width="52">&nbsp;</td>
+<td valign="top" width="53">
+<p align="center">+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="52">&nbsp;</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">&nbsp;</td>
+<td valign="top" width="52">&nbsp;</td>
+<td valign="top" width="52">&nbsp;</td>
+<td valign="top" width="53">
+<p align="center">+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="52">&nbsp;</td>
+<td valign="top" width="52">&nbsp;</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">&nbsp;</td>
+<td valign="top" width="52">&nbsp;</td>
+<td valign="top" width="53">
+<p align="center">+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="52">&nbsp;</td>
+<td valign="top" width="52">&nbsp;</td>
+<td valign="top" width="52">&nbsp;</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">
+<p align="center">-</p>
+</td>
+<td valign="top" width="53">
+<p align="center">+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="52">&nbsp;</td>
+<td valign="top" width="52">&nbsp;</td>
+<td valign="top" width="52">&nbsp;</td>
+<td valign="top" width="52">
+<p align="center">-</p>
+</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="53">
+<p align="center">+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="53">
+<p align="center">-</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Но теперь в те клетки, из которых можно попасть в клетку, в которой стоит знак «-» за один ход, необходимо записать знак «+» — если ферзь стоит в этой клетке, то игрок, который делает ход, может выиграть, если передвинет ферзя в клетку, в которой стоит знак «--»:</p>
+<table border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">&nbsp;</td>
+<td valign="top" width="52">&nbsp; &nbsp; &nbsp; +</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="53">
+<p align="center">+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">&nbsp; &nbsp; &nbsp; +</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="53">
+<p align="center">+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="52">&nbsp;</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="53">
+<p align="center">+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="52">&nbsp; &nbsp; &nbsp; +&nbsp;</td>
+<td valign="top" width="52">&nbsp; &nbsp; &nbsp; +</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">
+<p align="center">--</p>
+</td>
+<td valign="top" width="53">
+<p align="center">+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">
+<p align="center">--</p>
+</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="53">
+<p align="center">+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="53">
+<p align="center">--</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Дальше таблица заполняется аналогично. В клетке ставиться знак «+», если есть ход, который ведет в клетку, в &nbsp;которой стоит знак «--». В клетке ставится знак «-», если все ходы из этой клетки ведут в клетки, в которых записан знак «+».</p>
+<table border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">
+<p align="center">--</p>
+</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="53">
+<p align="center">+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="53">
+<p align="center">+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="52">
+<p align="center">--</p>
+</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="53">
+<p align="center">+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">
+<p align="center">--</p>
+</td>
+<td valign="top" width="53">
+<p align="center">+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">
+<p align="center">--</p>
+</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="53">
+<p align="center">+</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="52">
+<p align="center">+</p>
+</td>
+<td valign="top" width="53">
+<p align="center">--</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Продолжая таким образом, можно определить выигрывающего игрока для любой начальной клетки. Реализацию данного алгоритма оставим читателям.</p></div><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script></body></html>

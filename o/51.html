@@ -1,0 +1,108 @@
+<!doctype html>
+<html><head><link rel="stylesheet" href="../page.css"><title>20. Алгоритм Форда-Беллмана</title></head><body><h1>20. Алгоритм Форда-Беллмана</h1>
+<div class="page_content_main"><p><strong>Алгоритм Форда-Беллмана</strong> позволяет найти кратчайшие пути из одной вершины графа до всех остальных, даже для графов, в которых веса ребер могут быть отрицательными. Тем не менее, в графе не должно быть циклов отрицательного веса, достижимых из начальной вершины, иначе вопрос о кратчайших путях является бессмысленным. При этом алгоритм Форда-Беллмана позволяет определить наличие циклов отрицательного веса, достижимых из начальной вершины.</p>
+<p>Алгоритм Форда-Беллмана использует динамическое программирование. Введем функцию динамического программирования:</p>
+<p>F[k][i] — длина кратчайшего пути из начальной вершины до вершины i, содержащего не более k ребер.</p>
+<p>Начальные значения зададим для случая k=0. В этом случае F[0][start] = 0, а для всех остальных вершин i F[0][i] = INF, то есть путь, состоящий из нуля ребер существует только от вершины start до вершины start, а до остальных вершин пути из нуля ребер не существует, что будем отмечать значением INF.</p>
+<p>Далее будем вычислять значения функции F увеличивая число ребер в пути k, то есть вычислим кратчайшие пути, содержащие не более 1 ребра, кратчайшие пути, содержащие не более 2 ребер и т. д. Если в графе нет циклов отрицательного веса, то кратчайший путь между любыми двумя вершинами содержит не более <span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-1-Frame" tabindex="0" style="font-size: 100%; display: inline-block; position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>n</mi><mo>&amp;#x2212;</mo><mn>1</mn></math>" role="presentation"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="5.398ex" height="2.194ex" viewBox="0 -754.4 2323.9 944.5" role="img" focusable="false" style="vertical-align: -0.442ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#MJMATHI-6E" x="0" y="0"></use><use xlink:href="#MJMAIN-2212" x="822" y="0"></use><use xlink:href="#MJMAIN-31" x="1823" y="0"></use></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi><mo>−</mo><mn>1</mn></math></span></span><script type="math/tex" id="MathJax-Element-1">n-1</script> ребра (<span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-2-Frame" tabindex="0" style="font-size: 100%; display: inline-block; position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>n</mi></math>" role="presentation"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.395ex" height="1.611ex" viewBox="0 -566.3 600.5 693.7" role="img" focusable="false" style="vertical-align: -0.296ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#MJMATHI-6E" x="0" y="0"></use></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi></math></span></span><script type="math/tex" id="MathJax-Element-2">n</script> - число вершин в графе), поэтому нужно вычислить значения F[n-1][i], которые и будут длинами кратчайших путей от вершины start до вершины i).</p>
+<p>Рассмотрим, как вычисляется значение F[k][i]. Пусть есть кратчайший маршрут из вершины start до вершины i, содержащий не более k ребер. Пусть последнее ребро этого маршрута есть ребро j-i. Тогда путь до вершины j содержит не более k-1 ребра и является кратчайшим путем из всех таких путей, значит, его длина равна F[k-1][j], а длина пути до вершины i равна F[k-1][j] + W[j][i], где W[j][i] есть вес ребра j-i. Дальше необходимо перебрать все вершины j, которые могут выступать в качестве предыдущих, и выбрать минимальное значение F[k-1][j] + W[j][i].</p>
+<p>Получаем следующий алгоритм:</p>
+<h3>Реализация на языке C++</h3>
+<div class="page_code_style">
+<p>const int INF = 1e9;<br>vector &lt;vector&lt;int&gt; &gt; F(N, vector&lt;int&gt;(n, INF));<br>F[0][start] = 0;<br>for (int k = 1; k &lt; N; ++k)<br>&nbsp; &nbsp; for (int i = 0; i &lt; N; ++i)<br>&nbsp;&nbsp;&nbsp; {<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;F[k][i] = F[k - 1][i];</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; for (int j = 0; j &lt; N; ++j)</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if (F[k - 1][j] + W[j][i] &lt; F[k][i])</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;F[k][i] = F[k - 1][j] + W[j][i];<br>&nbsp;&nbsp;&nbsp; }</p>
+</div>
+<h3>Реализация на языке Python</h3>
+<div class="page_code_style">
+<p>INF = 10 ** 9<br>F = [[INF] * N for i in range(N)]<br>F[0][start] = 0 <br>for k in range(1, N): <br>&nbsp; &nbsp; for i in range(N): <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;F[k][i] = F[k - 1][i]</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;for j in range(N):</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if F[k - 1][j] + W[j][i] &lt; F[k][i]:</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;F[k][i] = F[k - 1][j] + W[j][i]</p>
+</div>
+<p>Очевидно, что сложность такого алгоритма <span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-3-Frame" tabindex="0" style="font-size: 100%; display: inline-block; position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>O</mi><mo stretchy=&quot;false&quot;>(</mo><msup><mi>n</mi><mn>3</mn></msup><mo stretchy=&quot;false&quot;>)</mo></math>" role="presentation"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="6.032ex" height="3.068ex" viewBox="0 -942.5 2596.9 1320.7" role="img" focusable="false" style="vertical-align: -0.878ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#MJMATHI-4F" x="0" y="0"></use><use xlink:href="#MJMAIN-28" x="763" y="0"></use><g transform="translate(1153,0)"><use xlink:href="#MJMATHI-6E" x="0" y="0"></use><use transform="scale(0.707)" xlink:href="#MJMAIN-33" x="849" y="513"></use></g><use xlink:href="#MJMAIN-29" x="2207" y="0"></use></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>O</mi><mo stretchy="false">(</mo><msup><mi>n</mi><mn>3</mn></msup><mo stretchy="false">)</mo></math></span></span><script type="math/tex" id="MathJax-Element-3">O(n^3)</script>.</p>
+<p>Теперь модифицируем этот алгоритм. Прежде всего, сделаем массив F одномерным - «склеим» значения F[k][i] для разных значений k, будем хранить в массиве F[i] кратчайшее известное расстояние до вершины i, улучшая его по ходу. Получим следующий код:</p>
+<h3>Реализация на языке C++</h3>
+<div class="page_code_style">
+<p>const int INF = 1e9;<br>vector &lt;int&gt; F(N, INF);<br>F[start] = 0;<br>for (int k = 1; k &lt; N; ++k)<br>&nbsp; &nbsp; for (int i = 0; i &lt; N; ++i)<br>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; for (int j = 0; j &lt; N; ++j)</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if (F[k - 1][j] + W[j][i] &lt; F[k][i])</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;F[k][i] = F[k - 1][j] + W[j][i];</p>
+</div>
+<h3>Реализация на языке Python</h3>
+<div class="page_code_style">
+<p>INF = 10 ** 9 <br>F = [INF] * N <br>F[start] = 0 <br>for k in range(1, N):</p>
+<p>&nbsp; &nbsp; for i in range(N):</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; for j in range(N):</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if F[j] + W[j][i] &lt; F[i]:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; F[i] = F[j] + W[j][i]</p>
+</div>
+<p>Последние две строчки есть ни что иное, как релаксация ребра j-i, как это делается в алгоритме Дейкстры. А два последних цикла по вершинам j и i с релаксацией ребра j-i просто являются релаксацией всех ребер в графе. Но если граф «разреженный», то его удобно хранить не в виде матрицы смежности, а в виде списков смежности, тогда перебор всех ребер в графе можно осуществить быстрее, чем перебирая все пары вершин.</p>
+<h2>Реализация алгоритма Форда-Беллмана с использованием списка ребер</h2>
+<p>Алгоритм Форда-Беллмана удобно реализовывать, если граф хранится "списком ребер", то есть в одном массиве хранится информация обо всех ребрах графа, так как основной цикл алгоритма Форда-Беллмана заключается в переборе всех ребер графа.</p>
+<p>Рассмотрим реализацию алгоритма Форда-Беллмана с использованием списка ребер на языке C++.</p>
+<p>Информация о ребрах графа будет храниться в одном векторе. Каждое ребро будет храниться в массиве из трех элементов: начало ребра, конец ребра, вес ребра. Организовать считывание графа можно следующим образом:</p>
+<div class="page_code_style">
+<p>int n, m;<br>cin &gt;&gt; n &gt;&gt; m;<br>vector &lt; vector &lt;int&gt; &gt; edges(m, vector&lt;int&gt;(3));<br>for (int i = 0; i &lt; m; ++i)<br>&nbsp;&nbsp;&nbsp; cin &gt;&gt; edges[i][0] &gt;&gt; edges[i][1] &gt;&gt; edges[i][2];</p>
+</div>
+<p>Тогда перебрать все ребра графа, можно организовав цикл по всем элементам вектора edges:</p>
+<div class="page_code_style">
+<p>const int INF = 1e9;<br>vector &lt;int&gt; F(N, INF);<br>F[start] = 0;<br>for (int k = 1; k &lt; N; ++k)<br>&nbsp; &nbsp; for (auto &amp; edge: edges)<br>&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int start = edge[0];<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int finish = edge[1];<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int weight = edge[2];<br>&nbsp; &nbsp; &nbsp; &nbsp; if (F[start] + weight &lt; F[finish])</p>
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; F[finish] = F[start] + weight;<br>&nbsp;&nbsp;&nbsp; }</div>
+<p>Рассмотрим реализацию алгоритма Форда-Беллмана с использованием списков смежности на языке Python.</p>
+<p>Пусть граф задан списками смежности, а вес ребра j-i хранится в словаре W[j, i], где ключ — это кортеж из j, i, а значение — вес ребра. Такой способ хранения графа рассматривался в виде одной из возможных реализаций алгоритмы Дейкстры.</p>
+<p>Тогда перебрать все ребра графа, можно организовав цикл по всем ключам словаря W и алгоритм Форда-Беллмана можно записать в виде:</p>
+<div class="page_code_style">
+<p>INF = 10 ** 9</p>
+<p>F = [INF] * N</p>
+<p>F[start] = 0</p>
+<p>for k in range(1, N):</p>
+<p>&nbsp; &nbsp; for j, i in W.keys():</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; if F[j] + W[j, i] &lt; F[i]:</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; F[i] = F[j] + W[j, i]</p>
+</div>
+<p>То есть по сути алгоритм Форда-Беллмана можно сформулировать так:</p>
+<ol>
+<li>&nbsp;Проинициализировать массив F значениями F[start] = 0, F[i] = INF для остальных i.</li>
+<li>&nbsp;Пройтись по всем ребрам j-i графа, пытаясь срелаксировать ребро j-i.</li>
+<li>&nbsp;Пункт 2 повторить n-1 раз.</li>
+</ol>
+<p>Сложность такого алгоритма равна <span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-4-Frame" tabindex="0" style="font-size: 100%; display: inline-block; position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>O</mi><mo stretchy=&quot;false&quot;>(</mo><mi>n</mi><mi>m</mi><mo stretchy=&quot;false&quot;>)</mo></math>" role="presentation"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="7.018ex" height="2.776ex" viewBox="0 -817.1 3021.5 1195.3" role="img" focusable="false" style="vertical-align: -0.878ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#MJMATHI-4F" x="0" y="0"></use><use xlink:href="#MJMAIN-28" x="763" y="0"></use><use xlink:href="#MJMATHI-6E" x="1153" y="0"></use><use xlink:href="#MJMATHI-6D" x="1753" y="0"></use><use xlink:href="#MJMAIN-29" x="2632" y="0"></use></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><mi>m</mi><mo stretchy="false">)</mo></math></span></span><script type="math/tex" id="MathJax-Element-4">O(nm)</script>, где <span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-5-Frame" tabindex="0" style="font-size: 100%; display: inline-block; position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>n</mi></math>" role="presentation"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.395ex" height="1.611ex" viewBox="0 -566.3 600.5 693.7" role="img" focusable="false" style="vertical-align: -0.296ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#MJMATHI-6E" x="0" y="0"></use></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi></math></span></span><script type="math/tex" id="MathJax-Element-5">n</script> - число вершин, <span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-6-Frame" tabindex="0" style="font-size: 100%; display: inline-block; position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>m</mi></math>" role="presentation"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="2.04ex" height="1.611ex" viewBox="0 -566.3 878.5 693.7" role="img" focusable="false" style="vertical-align: -0.296ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#MJMATHI-6D" x="0" y="0"></use></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>m</mi></math></span></span><script type="math/tex" id="MathJax-Element-6">m</script> - число ребер графа. Видно, что для плотных графов (где <span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-7-Frame" tabindex="0" style="font-size: 100%; display: inline-block; position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>m</mi><mo>&amp;#x2248;</mo><msup><mi>n</mi><mn>2</mn></msup></math>" role="presentation"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="7.588ex" height="2.485ex" viewBox="0 -942.5 3267 1069.9" role="img" focusable="false" style="vertical-align: -0.296ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#MJMATHI-6D" x="0" y="0"></use><use xlink:href="#MJMAIN-2248" x="1156" y="0"></use><g transform="translate(2212,0)"><use xlink:href="#MJMATHI-6E" x="0" y="0"></use><use transform="scale(0.707)" xlink:href="#MJMAIN-32" x="849" y="513"></use></g></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>m</mi><mo>≈</mo><msup><mi>n</mi><mn>2</mn></msup></math></span></span><script type="math/tex" id="MathJax-Element-7">m\approx n^2</script>) сложность близка к сложности предыдущего варианта алгоритма, а вот для разреженных графов (где <span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-8-Frame" tabindex="0" style="font-size: 100%; display: inline-block; position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>m</mi><mo>&amp;#x2248;</mo><mi>n</mi></math>" role="presentation"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="6.534ex" height="1.611ex" viewBox="0 -566.3 2813.1 693.7" role="img" focusable="false" style="vertical-align: -0.296ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#MJMATHI-6D" x="0" y="0"></use><use xlink:href="#MJMAIN-2248" x="1156" y="0"></use><use xlink:href="#MJMATHI-6E" x="2212" y="0"></use></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>m</mi><mo>≈</mo><mi>n</mi></math></span></span><script type="math/tex" id="MathJax-Element-8">m\approx n</script>) такой алгоритм будет существенно быстрее.</p>
+<p>Восстановление пути делается точно так же, как в алгоритме Дейкстры. Для этого необходимо запоминать предка для каждой вершины, обновляя его при успешной релаксации ребра:</p>
+<h3>Реализация на языке C++</h3>
+<div class="page_code_style">
+<p>const int INF = 1e9;<br>vector &lt;int&gt; F(N, INF);<br>vector &lt;int&gt; prev(N, -1);<br>F[start] = 0;<br>for (int k = 1; k &lt; N; ++k)<br>&nbsp; &nbsp; for (auto &amp; edge: edges)<br>&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int start = edge[0];<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int finish = edge[1];<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int weight = edge[2];<br>&nbsp; &nbsp; &nbsp; &nbsp; if (F[start] + weight &lt; F[finish])<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {</p>
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; F[finish] = F[start] + weight;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pref[finish] = start;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp; }</div>
+<h3>Реализация на языке Python</h3>
+<div class="page_code_style">
+<p>INF = 10 ** 9<br>F = [INF] * N <br>Prev = [None] * N <br>F[start] = 0 <br>for k in range(1, N): <br>&nbsp; &nbsp; for j, i in W.keys():</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; if F[j] + W[j, i] &lt; F[i]:</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; F[i] = F[j] + W[j, i]</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Prev[i] = Prev[j]</p>
+</div>
+<p>Сама процедура восстановления пути совпадает с аналогичной процедурой алгоритма Дейкстры.</p>
+<p>Алгоритм Форда-Беллмана можно остановить, если на очередном шаге ни одно ребро не было срелаксировано:</p>
+<h3>Реализация на языке C++</h3>
+<div class="page_code_style">
+<p>const int INF = 1e9;<br>vector &lt;int&gt; F(N, INF);<br>F[start] = 0;</p>
+<p>bool stop = false;<br>for (int k = 1; k &lt; N &amp;&amp; !stop; ++k)<br>{<br>&nbsp;&nbsp;&nbsp; stop = true;<br>&nbsp; &nbsp; for (auto &amp; edge: edges)<br>&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int start = edge[0];<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int finish = edge[1];<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int weight = edge[2];<br>&nbsp; &nbsp; &nbsp; &nbsp; if (F[start] + weight &lt; F[finish])<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {</p>
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; F[finish] = F[start] + weight;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stop = false;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp; }<br>}</div>
+<h3>Реализация на языке Python</h3>
+<div class="page_code_style">
+<p>INF = 10 ** 9<br>F = [INF] * N <br>F[start] = 0 <br>Stop = False <br>k = 1</p>
+<p>while k &lt; N and not Stop: <br>&nbsp; &nbsp; k += 1 <br>&nbsp; &nbsp; Stop = True</p>
+<p>&nbsp; &nbsp; for j, i in W.keys():</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; if F[j] + W[j, i] &lt; F[i]:</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; F[i] = F[j] + W[j, i]</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Stop = False</p>
+</div>
+<p>Также алгоритм Форда-Беллмана можно использовать для проверки того, есть ли в графе цикл отрицательного веса, достижимый из начальной вершины. Для этого нужно еще раз попробовать срелаксировать все ребра. Если хотя бы одна релаксация возможна, то граф содержит цикл отрицательного веса, достижимый из начальной вершины.</p>
+<h3>Реализация на языке C++</h3>
+<div class="page_code_style">bool cycle_found = false;<br>
+<p>for (auto &amp; edge: edges)<br>{<br>&nbsp;&nbsp;&nbsp; int start = edge[0];<br>&nbsp;&nbsp;&nbsp; int finish = edge[1];<br>&nbsp;&nbsp;&nbsp; int weight = edge[2];<br>&nbsp; &nbsp; if (F[start] + weight &lt; F[finish])<br>&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cycle_found = true;</p>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;<br>&nbsp;&nbsp;&nbsp; }<br>}</div>
+<h3>Реализация на языке Python</h3>
+<div class="page_code_style">
+<p>CycleFound = False <br>for j, i in W.keys(): <br>&nbsp; &nbsp; if F[j] + W[j, i] &lt; F[i]: <br>&nbsp; &nbsp; &nbsp; &nbsp; CycleFound = True</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; break</p>
+</div></div><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script></body></html>

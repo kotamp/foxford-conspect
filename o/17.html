@@ -1,0 +1,44 @@
+<!doctype html>
+<html><head><link rel="stylesheet" href="../page.css"><title>5. Контейнер stack в STL</title></head><body><h1>5. Контейнер stack в STL</h1>
+<div class="page_content_main"><h2>Контейнер stack в STL</h2>
+<p>Стек (англ. stack) - это структура данных, в которой доступ осуществляется только к последнему добавленному элементу: новые элементы добавляются в конец стека, элементы удаляются также из конца стека, то есть при удалении элемента из стека удаляется последний добавленный элемент. В STL есть специальный контейнер stack, который реализует подобную функциональность. Для его использования необходимо подключить заголовочный файл stack:</p>
+<div class="page_code_style">
+<p>#include&lt;stack&gt;</p>
+</div>
+<p>Объявляется стек, например, целых чисел так:</p>
+<div class="page_code_style">
+<p>stack &lt;int&gt; S;</p>
+</div>
+<p>Стек поддерживает следущие методы:</p>
+<table border="0">
+<tbody>
+<tr>
+<td>Название метода</td>
+<td>Описание</td>
+</tr>
+<tr>
+<td>size()</td>
+<td>Возвращает размер стека</td>
+</tr>
+<tr>
+<td>empty()</td>
+<td>Возвращает true, если стек пуст, или false, если непуст</td>
+</tr>
+<tr>
+<td>top()</td>
+<td>Возвращает значение верхнего элемента в стеке</td>
+</tr>
+<tr>
+<td>pop()</td>
+<td>Удаляет верхний элемент из стека, не возвращает значение</td>
+</tr>
+<tr>
+<td>push(elem)</td>
+<td>Добавляет новый элемент elem на вершину стека</td>
+</tr>
+</tbody>
+</table>
+<p>Операции pop() или top(), вызванные для пустого стека, приведут к ошибке исполнения.</p>
+<p>Также с объектами класса stack допустимы операции =, ==, !=, &lt;, &gt;, &lt;=, &gt;=.</p>
+<p>Подробней о контейнере stack можно прочитать <a href="http://ru.cppreference.com/w/cpp/container/stack">в документации</a>.</p></div><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script></body></html>
